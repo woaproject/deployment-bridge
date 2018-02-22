@@ -22,6 +22,15 @@
     - restart parity-home
     - restart bridge
 
+- name: Add password for test user to home
+  lineinfile:
+    path: "{{ base_path }}/{{ home_name }}/pass.pwd"
+    state: present
+    line: "{{ actor_password }}"
+  notify:
+    - restart parity-home
+    - restart bridge
+
 # - name: Restart parity-home
 #   become: yes
 #   become_user: root
@@ -34,6 +43,15 @@
   template:
     src: "actor.json.j2"
     dest: "{{ base_path }}/{{ foreign_name }}/parity_data/keys/{{ foreign_chain_name }}/actor.json"
+  notify:
+    - restart parity-foreign
+    - restart bridge
+
+- name: Add password for test user to foreign
+  lineinfile:
+    path: "{{ base_path }}/{{ foreign_name }}/pass.pwd"
+    state: present
+    line: "{{ actor_password }}"
   notify:
     - restart parity-foreign
     - restart bridge

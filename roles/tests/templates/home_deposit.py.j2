@@ -35,7 +35,7 @@ tx = {'from': actor, 'to': bridgeContractAddress, 'value': value ,'gasPrice': _g
 
 print("Sending", value, "to Home bridge")
 
-txHash = web3.personal.sendTransaction(tx, "11")
+txHash = web3.personal.sendTransaction(tx, "{{ actor_password }}")
 wait_for_transaction_receipt(web3, txHash)
 
 print("TX:", txHash.hex())

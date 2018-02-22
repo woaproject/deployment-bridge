@@ -65,7 +65,7 @@ txToSend = TokenContract.functions.approveAndCall(bridgeContractAddress, value, 
 # This is needed since sendTransaction does not expect this argument parameter and does not skip it by some reason
 txToSend.pop('chainId', None)
 
-txHash = web3.personal.sendTransaction(txToSend, "11")
+txHash = web3.personal.sendTransaction(txToSend, "{{ actor_password }}")
 wait_for_transaction_receipt(web3, txHash)
 
 print("TX:", txHash.hex())

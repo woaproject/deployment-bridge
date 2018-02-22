@@ -171,3 +171,10 @@ Logs are collected by systemd to `/var/log/syslog` and can be viewed with
 tail -F /var/log/syslog | grep [service-name]
 ```
 
+4. `tests` run the following scenario
+    1. deposit @ home: `home_deposit.py`
+    2. check token balance after deposit: `token_balance.py`
+    3. withdraw from foreign: `token_withdraw.py`
+    4. check token balance after withdraw: `token_balance.py`
+
+ansible's output is unfortunately not too readable

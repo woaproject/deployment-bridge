@@ -3,6 +3,8 @@
 **This is work in progress**
 At the current moment trying to replicate functionality of https://github.com/poanetwork/parity-bridge-research
 
+At the present moment this playbook is to perform initial deployment of the bridge and parity services. If you want to run it against existing installation some files might be overwritten, please at least set `initial_deployment: no` in `hosts.yml`.
+
 ### Requirements
 * on local machine: python, ansible
 * on remote: ubuntu server 16.04, python 3
@@ -169,10 +171,3 @@ Logs are collected by systemd to `/var/log/syslog` and can be viewed with
 tail -F /var/log/syslog | grep [service-name]
 ```
 
-4. `tests` run the following scenario
-    1. deposit @ home: `home_deposit.py`
-    2. check token balance after deposit: `token_balance.py` 
-    3. withdraw from foreign: `token_withdraw.py`
-    4. check token balance after withdraw: `token_balance.py`
-
-ansible's output is unfortunately not too readable

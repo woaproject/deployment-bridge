@@ -40,6 +40,14 @@
   tags:
     - configs
 
+- name: Download parity-home bootnodes
+  get_url:
+    url: "{{ home_bootnodes }}"
+    dest: "{{ base_path }}/{{ home_name }}"
+  notify:
+    - restart parity-home
+  when: home_bootnodes != ""
+
 - name: Create parity-home password.pwd
   template:
     src: pass.pwd.j2

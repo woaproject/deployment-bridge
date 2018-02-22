@@ -40,6 +40,14 @@
   tags:
     - configs
 
+- name: Download parity-foreign bootnodes
+  get_url:
+    url: "{{ foreign_bootnodes }}"
+    dest: "{{ base_path }}/{{ foreign_name }}"
+  notify:
+    - restart parity-foreign
+  when: foreign_bootnodes != ""
+
 - name: Create parity-foreign password.pwd
   template:
     src: pass.pwd.j2

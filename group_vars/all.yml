@@ -8,9 +8,11 @@ parity_bin_sha256: "3604a030388cd2c22ebe687787413522106c697610426e09b3c5da4fe70b
 
 ### parity home side configs
 home_name: "home"
+home_bootnodes: ""
 
 ### parity foreign side configs
 foreign_name: "foreign"
+foreign_bootnodes: ""
 
 ### bridge service
 bridge_bin_url: "https://transfer.sh/ocdh7/bridge"

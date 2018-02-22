@@ -8,12 +8,14 @@ all:
 
       home_chain_json: "" # expecting url
       home_chain_name: "" # dataDir or name from chain.json, if both are present use value from dataDir
+      home_bootnodes: "" # (optional) expecting url
       home_signer_address: "" # 0x...
       home_signer_keyfile: '' # whole content of json file
       home_signer_password: ""
 
       foreign_chain_json: "" # expecting url
       foreign_chain_name: "" # dataDir or name from chain.json, if both are present use value from dataDir
+      foreign_bootnodes: "" # (optional) expecting url
       foreign_signer_address: "" # 0x...
       foreign_signer_keyfile: '' # whole content of json file
       foreign_signer_password: ""
@@ -31,8 +33,6 @@ all:
       foreign_request_timeout: 360
 
       authorities:
-        - ""
-        - ""
         - ""
       required_signatures: 1
 

@@ -17,6 +17,7 @@
   template:
     src: config.toml.j2
     dest: "{{ base_path }}/bridge/config.toml"
+    force: no
   notify:
     - restart bridge
 
@@ -73,7 +74,7 @@
   copy:
     src: "{{ db_toml_location)"
     dest: "{{ base_path }}/bridge"
-  when: not initial_deployment
+  when: not initial_deployment and db_toml_location != ""
 
 ### tests
 ### NOTE: tests should be separated

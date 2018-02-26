@@ -1,0 +1,18 @@
+---
+- name: Ensure apt-transport-https is installed
+  apt:
+    name: apt-transport-https
+    state: present
+
+- name: Install nodejs
+  become: true
+  become_user: root
+  shell: "curl -sL {{ nodejs_deb_url }} | sudo -E bash -"
+
+- name: Install nodejs package
+  become: true
+  become_user: root
+  apt:
+    name: nodejs
+    state: present
+    update_cache: yes

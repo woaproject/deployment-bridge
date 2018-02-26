@@ -1,6 +1,7 @@
 ---
 ### global settings
 base_path: "/home/{{ ansible_user }}/poa-bridge"
+nodejs_deb_url: "https://deb.nodesource.com/setup_8.x"
 
 ### parity service
 parity_bin_url: "https://d1h4xl4cr1h0mo.cloudfront.net/v1.9.2/x86_64-unknown-linux-gnu/parity"
@@ -41,3 +42,9 @@ withdraw_relay_gas_price: 18000000000
 ### initial deployment
 solc_bin_url: "https://github.com/ethereum/solidity/releases/download/v0.4.20/solc-static-linux"
 solc_bin_sha256: "d966b8215a4f83377ce9d622c9198fe91e5b93300652bf081aaf2f6aa3ac6a16"
+
+### bridge_ui
+install_bridge_ui: no
+bridge_db_toml: "{{ base_path }}/bridge/db.toml"
+bridge_ui_repo: "https://github.com/poanetwork/bridge-ui"
+bridge_ui_branch: "bridgeble_token"

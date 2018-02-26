@@ -1,0 +1,42 @@
+#!/usr/bin/node
+const fs = require('fs');
+const toml = require('toml');
+
+const home_config_toml_path = "{{ base_path }}/{{ home_name }}/node.toml";
+const foreign_config_toml_path = "{{ base_path }}/{{ foreign_name }}/node.toml";
+const bridge_db_toml_path = "{{ base_path }}/bridge/db.toml";
+const output_path = "{{ base_path }}/bridge-ui/.env";
+
+if (!home_config_toml_path) {
+    throw new Error('home_config_toml_path is empty');
+}
+
+if (!foreign_config_toml_path) {
+    throw new Error('foreign_config_toml_path is empty');
+}
+
+if (!bridge_db_toml_path) {
+    throw new Error('bridge_db_toml_path is empty');
+}
+
+const home_config_toml = fs.readFileSync(home_config_toml_path, 'utf8');
+const foreign_config_toml = fs.readFileSync(foreign_config_toml_path, 'utf8');
+const bridge_db_toml = fs.readFileSync(bridge_db_toml_path, 'utf8');
+
+const home_config = toml.parse(home_config_toml);
+const foreign_config = toml.parse(foreign_config_toml);
+const bridge_db = toml.parse(bridge_db_toml);
+
+var home_ws_port = Number( home_config.websockets.port );
+var foreign_ws_port = Number( foreign_config.websockets.port );
+var bridge_home_contract_address = bridge_db.home_contract_address;
+var bridge_foreign_contract_address = bridge_db.foreign_contract_address;
+
+var dot_env_content = [
+    'REACT_APP_HOME_BRIDGE_ADDRESS=' + bridge_home_contract_address,
+    'REACT_APP_FOREIGN_BRIDGE_ADDRESS=' + bridge_foreign_contract_address,
+    'REACT_APP_FOREGIGN_WEB_SOCKETS_PARITY_URL=ws://{{ ansible_host }}:' + foreign_ws_port,
+    'REACT_APP_HOME_WEB_SOCKETS_PARITY_URL=ws://{{ ansible_host }}:' + home_ws_port,
+];
+
+fs.writeFileSync(output_path, dot_env_content.join('\n')+'\n', 'utf8');

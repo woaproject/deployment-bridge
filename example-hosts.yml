@@ -8,14 +8,14 @@ all:
 
       home_chain_json: "" # expecting url
       home_chain_name: "" # dataDir or name from chain.json, if both are present use value from dataDir
-      home_bootnodes: "" # (optional) expecting url
+      home_bootnodes: "" # (optional) expecting url to reserved peers file
       home_signer_address: "" # 0x...
       home_signer_keyfile: '' # whole content of json file
       home_signer_password: ""
 
       foreign_chain_json: "" # expecting url
       foreign_chain_name: "" # dataDir or name from chain.json, if both are present use value from dataDir
-      foreign_bootnodes: "" # (optional) expecting url
+      foreign_bootnodes: "" # (optional) expecting url to reserved peers file
       foreign_signer_address: "" # 0x...
       foreign_signer_keyfile: '' # whole content of json file
       foreign_signer_password: ""
@@ -40,3 +40,7 @@ all:
       actor_address: ""
       actor_keyfile: ''
       actor_password: ""
+
+      ### bridge_ui
+      ### !!! exposes unsafe apis!!! don't use with prod networks (mainnet, core)
+      install_bridge_ui: no

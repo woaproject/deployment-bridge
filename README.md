@@ -56,6 +56,10 @@ all:
       actor_address: "0x37a30534da3d53aa1867adde26e114a3161b2b12"
       actor_keyfile: '{"id":"8437ae14-1e28-75d3-4512-a60d63dbfb64","version":3,"crypto":{"cipher":"aes-128-ctr","cipherparams":{"iv":"6ac9cafc4afa4ec408c9e72d99d77b7d"},"ciphertext":"d4c72972233cadf95e3fda4598692cb08461807ebcfa153dc123b48de438bbdb","kdf":"pbkdf2","kdfparams":{"c":10240,"dklen":32,"prf":"hmac-sha256","salt":"c1fa041558f35b0ff17aa1e0ab49b71ecceff739a2f6f87d7abc8eb0661df3c5"},"mac":"d968ac0bad6361192c4ab1c2f96fade3eab05de3c7edd7dfb86b686de2a6429c"},"address":"37a30534da3d53aa1867adde26e114a3161b2b12","name":"","meta":"{}"}'
       actor_password: "11"
+
+      ### bridge_ui
+      ### !!! exposes unsafe apis!!! don't use with prod networks (mainnet, core)
+      install_bridge_ui: no
 ```
 
 2. run the playbook (if `ansible_user` cannot execut `sudo` without password, add `--ask-sudo-password` flag below)
@@ -73,84 +77,116 @@ ansible-playbook -i hosts.yml tests.yml [--ask-sudo-password]
 ```
 .
 └── poa-bridge
-    ├── bridge
-    │   ├── bridge*
-    │   ├── config.toml
-    │   ├── contracts
-    │   │   ├── bridge.sol
-    │   │   ├── ERC20.abi
-    │   │   ├── ERC20.bin
-    │   │   ├── ForeignBridge.abi
-    │   │   ├── ForeignBridge.bin
-    │   │   ├── foreign_tokenreg.py
-    │   │   ├── Helpers.abi
-    │   │   ├── Helpers.bin
-    │   │   ├── HelpersTest.abi
-    │   │   ├── HelpersTest.bin
-    │   │   ├── HomeBridge.abi
-    │   │   ├── HomeBridge.bin
-    │   │   ├── Message.abi
-    │   │   ├── Message.bin
-    │   │   ├── MessageSigning.abi
-    │   │   ├── MessageSigning.bin
-    │   │   ├── MessageSigningTest.abi
-    │   │   ├── MessageSigningTest.bin
-    │   │   ├── MessageTest.abi
-    │   │   └── MessageTest.bin
-    │   ├── db.toml
-    │   ├── solc*
-    │   ├── tests
-    │   │   ├── home_deposit.py
-    │   │   ├── test_env_db.toml
-    │   │   ├── token_balance.py
-    │   │   └── token_withdraw.py
-    │   └── token
-    │       ├── ApproveAndCallFallBack.abi
-    │       ├── ApproveAndCallFallBack.bin
-    │       ├── BridgeableToken.abi
-    │       ├── BridgeableToken.bin
-    │       ├── BridgeableToken.sol
-    │       ├── ERC20.abi
-    │       ├── ERC20Basic.abi
-    │       ├── ERC20Basic.bin
-    │       ├── ERC20.bin
-    │       ├── MintableToken.abi
-    │       ├── MintableToken.bin
-    │       ├── Ownable.abi
-    │       ├── Ownable.bin
-    │       ├── SafeMath.abi
-    │       ├── SafeMath.bin
-    │       ├── SafeMathLib.abi
-    │       ├── SafeMathLib.bin
-    │       ├── StandardToken.abi
-    │       ├── StandardToken.bin
-    │       └── token_foreign.py
-    ├── foreign
-    │   ├── chain.json
-    │   ├── node.toml
-    │   ├── parity*
-    │   ├── parity_data
-    │   │   ├── cache
-    │   │   ├── chains
-    │   │   ├── dapps
-    │   │   ├── jsonrpc.ipc
-    │   │   ├── keys
-    │   │   ├── network
-    │   │   └── signer
-    │   └── pass.pwd
-    └── home
-        ├── chain.json
-        ├── node.toml
-        ├── parity*
-        ├── parity_data
-        │   ├── cache
-        │   ├── chains
-        │   ├── dapps
-        │   ├── jsonrpc.ipc
-        │   ├── keys
-        │   ├── network
-        │   └── signer
-        └── pass.pwd
+    ├── bridge
+    │   ├── bridge*
+    │   ├── config.toml
+    │   ├── contracts
+    │   │   ├── bridge.sol
+    │   │   ├── ERC20.abi
+    │   │   ├── ERC20.bin
+    │   │   ├── ForeignBridge.abi
+    │   │   ├── ForeignBridge.bin
+    │   │   ├── foreign_tokenreg.py
+    │   │   ├── Helpers.abi
+    │   │   ├── Helpers.bin
+    │   │   ├── HelpersTest.abi
+    │   │   ├── HelpersTest.bin
+    │   │   ├── HomeBridge.abi
+    │   │   ├── HomeBridge.bin
+    │   │   ├── Message.abi
+    │   │   ├── Message.bin
+    │   │   ├── MessageSigning.abi
+    │   │   ├── MessageSigning.bin
+    │   │   ├── MessageSigningTest.abi
+    │   │   ├── MessageSigningTest.bin
+    │   │   ├── MessageTest.abi
+    │   │   └── MessageTest.bin
+    │   ├── db.toml
+    │   ├── solc*
+    │   ├── tests
+    │   │   ├── home_deposit.py
+    │   │   ├── test_env_db.toml
+    │   │   ├── token_balance.py
+    │   │   └── token_withdraw.py
+    │   └── token
+    │       ├── ApproveAndCallFallBack.abi
+    │       ├── ApproveAndCallFallBack.bin
+    │       ├── BridgeableToken.abi
+    │       ├── BridgeableToken.bin
+    │       ├── BridgeableToken.sol
+    │       ├── ERC20.abi
+    │       ├── ERC20Basic.abi
+    │       ├── ERC20Basic.bin
+    │       ├── ERC20.bin
+    │       ├── MintableToken.abi
+    │       ├── MintableToken.bin
+    │       ├── Ownable.abi
+    │       ├── Ownable.bin
+    │       ├── SafeMath.abi
+    │       ├── SafeMath.bin
+    │       ├── SafeMathLib.abi
+    │       ├── SafeMathLib.bin
+    │       ├── StandardToken.abi
+    │       ├── StandardToken.bin
+    │       └── token_foreign.py
+    ├── bridge-ui
+    │   ├── build
+    │   │   ├── asset-manifest.json
+    │   │   ├── favicon.ico
+    │   │   ├── index.html
+    │   │   ├── manifest.json
+    │   │   ├── service-worker.js
+    │   │   └── static
+    │   ├── example.png
+    │   ├── package.json
+    │   ├── package-lock.json
+    │   ├── public
+    │   │   ├── favicon.ico
+    │   │   ├── index.html
+    │   │   └── manifest.json
+    │   ├── README.md
+    │   ├── src
+    │   │   ├── App.css
+    │   │   ├── App.js
+    │   │   ├── App.test.js
+    │   │   ├── erc20.abi.json
+    │   │   ├── foreignAbi.json
+    │   │   ├── homeAbi.json
+    │   │   ├── index.css
+    │   │   ├── index.js
+    │   │   ├── logo.svg
+    │   │   └── registerServiceWorker.js
+    │   └── yarn.lock
+    ├── foreign
+    │   ├── chain.json
+    │   ├── node.toml
+    │   ├── parity*
+    │   ├── parity_data
+    │   │   ├── cache
+    │   │   ├── chains
+    │   │   ├── dapps
+    │   │   ├── jsonrpc.ipc
+    │   │   ├── keys
+    │   │   ├── network
+    │   │   └── signer
+    │   └── pass.pwd
+    ├── helpers
+    │   └── bridge-ui-env
+    │       ├── make-env.js
+    │       └── package-lock.json
+    └── home
+        ├── chain.json
+        ├── node.toml
+        ├── parity*
+        ├── parity_data
+        │   ├── cache
+        │   ├── chains
+        │   ├── dapps
+        │   ├── jsonrpc.ipc
+        │   ├── keys
+        │   ├── network
+        │   └── signer
+        └── pass.pwd
 ```
 
 `bridge` and `solc` binary are placed in `bridge` subfolder
@@ -158,7 +194,10 @@ each parity subfolder has its own copy of `parity` binary (in case different ver
 
 2. if `initial_deployment` in `hosts.yml` is set to `yes` token contract is compiled and deployed to the foreign network using `token_foreign.py` and then registered with `foreign_tokenreg.py`. If `initial_deployment` is set to `no` then `db.toml` is copied from local machine (`db_toml_location`)
 
-3. playbook installs 3 services: `parity-home`, `parity-foreign` and `bridge`. Status of a service can be checked with
+3. if `install_bridge_ui` is set to `yes` playbook also installs bridge-ui https://github.com/poanetwork/bridge-ui (branch can be configured with `bridge_ui_branch`). React files are process via `npm run build` and then served as static files using `http-server` and `pm2`.
+**NOTE**: installing bridge-ui exposes some unsafe apis to public, so do NOT install bridge-ui if you plan to use prod networks like mainnet or core in your bridge setup.
+
+4. playbook installs 3 services: `parity-home`, `parity-foreign` and `bridge`. Status of a service can be checked with
 ```
 sudo systemctl status [service-name]
 ```
@@ -171,7 +210,7 @@ Logs are collected by systemd to `/var/log/syslog` and can be viewed with
 tail -F /var/log/syslog | grep [service-name]
 ```
 
-4. `tests` run the following scenario
+5. `tests` run the following scenario
     1. deposit @ home: `home_deposit.py`
     2. check token balance after deposit: `token_balance.py`
     3. withdraw from foreign: `token_withdraw.py`

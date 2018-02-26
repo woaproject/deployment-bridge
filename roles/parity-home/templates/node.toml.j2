@@ -4,7 +4,11 @@ base_path = "parity_data"
 
 [network]
 port = 30333
+{% if install_bridge_ui %}
+nat = "extip:{{ ansible_host }}"
+{% else %}
 nat = "none"
+{% endif %}
 {% if home_bootnodes != "" %}
 reserved_peers="{{ base_path }}/{{ home_name }}/{{ home_bootnodes | basename }}"
 {% endif %}
@@ -12,8 +16,11 @@ reserved_peers="{{ base_path }}/{{ home_name }}/{{ home_bootnodes | basename }}"
 [rpc]
 port = 38545
 apis = ["web3", "eth", "net", "personal", "parity", "parity_set", "traces", "rpc", "parity_accounts"]
+{% if install_bridge_ui %}
 cors = ["all"]
 hosts = ["all"]
+interface = "{{ ansible_default_ipv4.address }}"
+{% endif %}
 
 [ipc]
 apis = ["web3", "eth", "pubsub", "net", "parity", "parity_pubsub", "parity_accounts", "traces", "rpc", "shh", "shh_pubsub", "personal"]
@@ -23,6 +30,11 @@ port = 38180
 force = true
 
 [websockets]
+{% if install_bridge_ui %}
+origins=["all"]
+hosts=["all"]
+interface = "{{ ansible_default_ipv4.address }}"
+{% endif %}
 port = 38546
 
 [account]

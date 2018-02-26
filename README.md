@@ -194,7 +194,7 @@ each parity subfolder has its own copy of `parity` binary (in case different ver
 
 2. if `initial_deployment` in `hosts.yml` is set to `yes` token contract is compiled and deployed to the foreign network using `token_foreign.py` and then registered with `foreign_tokenreg.py`. If `initial_deployment` is set to `no` then `db.toml` is copied from local machine (`db_toml_location`)
 
-3. if `install_bridge_ui` is set to `yes` playbook also installs bridge-ui https://github.com/poanetwork/bridge-ui (branch can be configured with `bridge_ui_branch`). React files are process via `npm run build` and then served as static files using `http-server` and `pm2`.
+3. if `install_bridge_ui` is set to `yes` playbook also installs bridge-ui https://github.com/poanetwork/bridge-ui (branch can be configured with `bridge_ui_branch`). React files are process via `npm run build` and then served as static files using `http-server` and `pm2` on `8080` port.
 **NOTE**: installing bridge-ui exposes some unsafe apis to public, so do NOT install bridge-ui if you plan to use prod networks like mainnet or core in your bridge setup.
 
 4. playbook installs 3 services: `parity-home`, `parity-foreign` and `bridge`. Status of a service can be checked with

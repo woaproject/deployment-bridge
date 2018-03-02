@@ -16,12 +16,16 @@ foreign_name: "foreign"
 foreign_bootnodes: ""
 
 ### bridge service
-bridge_bin_url: "https://transfer.sh/wXIxO/bridge"
-bridge_bin_sha256: "3bb5b107159581ebff00d7cb62a01df71785d9cf87c5a9e176e75995921b3850"
+#bridge_bin_url: "https://transfer.sh/wXIxO/bridge"
+#bridge_bin_sha256: "3bb5b107159581ebff00d7cb62a01df71785d9cf87c5a9e176e75995921b3850"
+bridge_bin_url: "https://transfer.sh/tyGlV/bridge"
+bridge_bin_sha256: "eb538b395b4e25e74a0d6a059183000a218b2732b1a2f5812772ab9c6d6ed2ea"
 
 ### bridge config
-bridge_contract_source: "https://raw.githubusercontent.com/poanetwork/parity-bridge-research/master/erc20/bridge/contracts/bridge.sol"
-token_contract_source: "https://raw.githubusercontent.com/poanetwork/parity-bridge-research/master/erc20/bridge/token/BridgeableToken.sol"
+#bridge_contract_source: "https://raw.githubusercontent.com/poanetwork/parity-bridge-research/master/erc20/bridge/contracts/bridge.sol"
+#token_contract_source: "https://raw.githubusercontent.com/poanetwork/parity-bridge-research/master/erc20/bridge/token/BridgeableToken.sol"
+bridge_contract_source: "https://raw.githubusercontent.com/poanetwork/parity-bridge/poa-dev-2/contracts/bridge.sol"
+token_contract_source: "https://raw.githubusercontent.com/poanetwork/parity-bridge/poa-dev-2/contracts/BridgeableToken.sol"
 
 estimated_gas_cost_of_withdraw: 0
 

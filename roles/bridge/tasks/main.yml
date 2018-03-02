@@ -108,3 +108,13 @@
     name: bridge
     state: started
     enabled: yes
+
+- name: Create setGas... script
+  template:
+    src: set_gas.py.j2
+    dest: "{{ base_path }}/bridge/contracts/set_gas.py"
+
+- name: Call setGas... methods
+  command: "python3 set_gas.py"
+  args:
+    chdir: "{{ base_path }}/bridge/contracts"

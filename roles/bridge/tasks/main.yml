@@ -109,6 +109,10 @@
     state: started
     enabled: yes
 
+- pause:
+    seconds: 10
+    prompt: "Wait 10 seconds in hope that tx gets mined"
+
 - name: Create setGas... script
   template:
     src: set_gas.py.j2

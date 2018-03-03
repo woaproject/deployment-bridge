@@ -10,6 +10,29 @@ At the present moment this playbook is to perform initial deployment of the brid
 * on remote: ubuntu server 16.04, python 3
 
 ### Deployment process
+
+#### Option-1: preconfigured dev instance
+1. create `hosts.yml` file based with the following content (replace `192.0.2.1` with your server's IP address, `ansible_user` with the user you can ssh with)
+```
+---
+all:
+  hosts:
+    192.0.2.1:
+      ansible_user: ubuntu
+```
+
+2. run the playbook (if `ansible_user` cannot execute `sudo` without password, add `--ask-sudo-password` flag below)
+```
+ansible-playbook -i hosts.yml site.yml [--ask-sudo-password]
+```
+
+3. (optional) run tests on the remote
+```
+ansible-playbook -i hosts.yml tests.yml [--ask-sudo-password]
+```
+
+
+#### Option-2: custom parameters
 1. create `hosts.yml` file based on the provided example:
 ```
 cp example-hosts.yml hosts.yml
@@ -62,7 +85,7 @@ all:
       install_bridge_ui: no
 ```
 
-2. run the playbook (if `ansible_user` cannot execut `sudo` without password, add `--ask-sudo-password` flag below)
+2. run the playbook (if `ansible_user` cannot execute `sudo` without password, add `--ask-sudo-password` flag below)
 ```
 ansible-playbook -i hosts.yml site.yml [--ask-sudo-password]
 ```

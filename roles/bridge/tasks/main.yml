@@ -113,6 +113,38 @@
     seconds: 10
     prompt: "Wait 10 seconds in hope that tx gets mined"
 
+- name: Install pip3
+  become: true
+  become_user: root
+  apt:
+    name: python3-pip
+    state: latest
+    update_cache: yes
+
+### FIXME: workaround for https://github.com/ethereum/web3.py/issues/660
+- name: Install pip3 packages (eth-utils 1.0.0b1)
+  become: true
+  become_user: root
+  pip:
+    name: eth-utils
+    version: 1.0.0b1
+    executable: pip3
+
+- name: Install pip3 packages (web3)
+  become: true
+  become_user: root
+  pip:
+    name: web3
+    version: 4.0.0b9
+    executable: pip3
+
+- name: Install pip3 packages (toml)
+  become: true
+  become_user: root
+  pip:
+    name: toml
+    executable: pip3
+
 - name: Create setGas... script
   template:
     src: set_gas.py.j2

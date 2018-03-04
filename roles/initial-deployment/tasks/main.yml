@@ -10,6 +10,7 @@
   apt:
     name: python3-pip
     state: latest
+    update_cache: yes
 
 ### FIXME: workaround for https://github.com/ethereum/web3.py/issues/660
 - name: Install pip3 packages (eth-utils 1.0.0b1)

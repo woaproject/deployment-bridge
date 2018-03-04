@@ -31,6 +31,33 @@ ansible-playbook -i hosts.yml site.yml [--ask-sudo-password]
 ansible-playbook -i hosts.yml tests.yml [--ask-sudo-password]
 ```
 
+#### Option-2: preconfigured dev instance via vagrant
+1. copy content of `Vagrantfile.example` into `Vagrantfile`
+```
+cp Vagrantfile.example Vagrantfile
+```
+
+2. create file `vagrant-hosts.yml`
+```
+---
+dev:
+  hosts:
+    127.0.0.1:
+      ansible_user: vagrant
+      ansible_port: 2222
+      ansible_ssh_private_key_file: '/home/$USER/.vagrant.d/insecure_private_key'
+```
+replace `$USER` with your local machine's username
+
+3. run vagrant
+```
+vagrant up
+```
+
+4. to login to the vm, use
+```
+vagrant ssh
+```
 
 #### Option-2: custom parameters
 1. create `hosts.yml` file based on the provided example:

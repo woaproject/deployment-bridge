@@ -49,7 +49,26 @@
   become_user: root
   command: npm install -g pm2
 
-- name: Start bridge_ui
-  command: "pm2 start --name bridge-ui --interpreter http-server ."
-  args:
-    chdir: "{{ base_path }}/bridge-ui/build"
+# - name: Start bridge_ui
+#   command: "pm2 start --name bridge-ui --interpreter http-server ."
+#   args:
+#     chdir: "{{ base_path }}/bridge-ui/build"
+
+### install service
+- name: Install bridge-ui service
+  become: yes
+  become_user: root
+  template:
+    src: bridge-ui.service.j2
+    dest: /etc/systemd/system/bridge-ui.service
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Ensure bridge-ui is running and enabled to start at boot
+  become: yes
+  become_user: root
+  service:
+    name: bridge-ui
+    state: started
+    enabled: yes

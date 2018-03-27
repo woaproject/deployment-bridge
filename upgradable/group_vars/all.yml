@@ -1,0 +1,10 @@
+### global settings
+base_path: "/home/{{ ansible_user }}/poa-bridge"
+
+### parity home side configs
+home_name: "home-node"
+home_bootnodes: ""
+
+### parity foreign side configs
+foreign_name: "foreign-node"
+foreign_bootnodes: ""

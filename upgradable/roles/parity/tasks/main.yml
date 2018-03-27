@@ -1,0 +1,85 @@
+---
+- name: "{{ node_name }} - create node folder"
+  file:
+    path: "{{ node_path }}"
+    state: directory
+
+- name: "{{ node_name }} - download parity binary"
+  get_url:
+    url: "{{ parity_bin_url }}"
+    checksum: "sha256:{{ parity_bin_sha256 }}"
+    dest: "{{ node_path }}/parity"
+    mode: "0755"
+  # notify:
+  #   - restart {{ service_name }}
+
+- name: "{{ node_name }} - create keys folder"
+  file:
+    path: "{{ node_path }}/parity_data/keys/{{ chain_folder_name }}"
+    state: directory
+  when: signer_address != ""
+
+- name: "{{ node_name }} - put signer keyfile into keys folder"
+  template:
+    src: keyfile.json.j2
+    dest: "{{ node_path }}/parity_data/keys/{{ chain_folder_name }}/{{ signer_address }}.json"
+  when: signer_address != ""
+
+- name: "{{ node_name }} - download chain.json"
+  get_url:
+    url: "{{ chain_json_url }}"
+    dest: "{{ node_path }}/{{ chain_name | lower }}.json"
+    mode: "0755"
+  when: chain_json_url != ""
+  # notify:
+  #   - restart {{ service_name }}
+
+- name: "{{ node_name }} - download bootnodes file"
+  get_url:
+    url: "{{ bootnodes_url }}"
+    dest: "{{ node_path }}/{{ bootnodes_url | basename }}"
+  # notify:
+  #   - restart {{ service_name }}
+  when: bootnodes_url != ""
+
+- name: "{{ node_name }} - create node.toml"
+  template:
+    src: node.toml.j2
+    dest: "{{ node_path }}/node.toml"
+  # notify:
+  #   - restart {{ service_name }}
+
+- name: "{{ node_name }} - create signer password file"
+  template:
+    src: pass.pwd.j2
+    dest: "{{ node_path }}/pass.pwd"
+  when: signer_address != ""
+  # notify:
+  #   - restart {{ service_name }}
+
+- name: "{{ node_name }} - install parity service"
+  become: yes
+  become_user: root
+  template:
+    src: parity.service.j2
+    dest: /etc/systemd/system/{{ service_name }}.service
+    owner: root
+    group: root
+    mode: "0755"
+  # notify:
+  #   - restart {{ service_name }}
+
+- name: "{{ node_name }} - ensure parity service is running and enabled to start at boot"
+  become: yes
+  become_user: root
+  service:
+    name: "{{ service_name }}"
+    state: started
+    enabled: yes
+
+# - name: restart {{ service_name }}
+#   become: yes
+#   become_user: root
+#   service:
+#     name: "{{ service_name }}"
+#     state: restarted

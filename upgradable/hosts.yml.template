@@ -1,0 +1,11 @@
+---
+sokol-kovan:
+  hosts:
+    192.0.2.1:
+      ansible_user: ubuntu
+      home_signer_address: ""
+      home_signer_keyfile: ''
+      home_signer_password: ""
+      foreign_signer_address: ""
+      foreign_signer_keyfile: ''
+      foreign_signer_password: ""

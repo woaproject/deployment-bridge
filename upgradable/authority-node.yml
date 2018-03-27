@@ -1,0 +1,6 @@
+---
+- hosts: all
+  roles:
+    - home-node
+    - foreign-node
+    - bridge

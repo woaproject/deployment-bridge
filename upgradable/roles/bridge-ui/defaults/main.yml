@@ -1,0 +1,13 @@
+###### Accepts the following parametrs:
+#
+# bridge_ui_path                              (*) path to the bridge-ui folder (also used in templates)
+# bridge_ui_service_name                      (*) name to be used for bridge-ui service
+# bridge_ui_repo                              (*) bridge ui repository
+# bridge_ui_branch                            (*) bridge ui branch
+#
+
+---
+bridge_ui_path: "{{ base_path }}/bridge-ui"
+bridge_ui_service_name: "bridge-ui"
+bridge_ui_repo: "https://github.com/poanetwork/bridge-ui"
+bridge_ui_branch: "master"

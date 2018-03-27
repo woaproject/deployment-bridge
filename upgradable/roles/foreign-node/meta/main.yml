@@ -1,0 +1,15 @@
+---
+dependencies:
+  - role: parity
+    node_name: "{{ foreign_name }}"
+    node_path: "{{ foreign_node_path }}"
+    service_name: "{{ foreign_service_name }}"
+    chain_name: "{{ foreign_chain_name }}"
+    chain_folder_name: "{{ foreign_chain_folder_name }}"
+    p2p_port: "{{ foreign_p2p_port }}"
+    rpc_port: "{{ foreign_rpc_port }}"
+    ws_port: "{{ foreign_ws_port }}"
+    signer_address: "{{ foreign_signer_address }}"
+    signer_keyfile: "{{ foreign_signer_keyfile }}"
+    signer_password: "{{ foreign_signer_password }}"
+

@@ -1,0 +1,42 @@
+[parity]
+{% if chain_json_url != "" %}
+chain = "{{ chain_name | lower }}.json"
+{% else %}
+chain = "{{ chain_name }}"
+{% endif %}
+base_path = "parity_data"
+
+[network]
+port = {{ p2p_port }}
+discovery = true
+nat = "extip:{{ ansible_host }}"
+{% if bootnodes_url != "" %}
+reserved_peers = "{{ bootnodes_url | basename }}"
+{% endif %}
+
+[rpc]
+port = {{ rpc_port }}
+apis = ["web3", "eth", "net", "parity", "rpc", "secretstore", "traces"]
+cors = ["all"]
+hosts = ["all"]
+interface = "all"
+
+[websockets]
+disable = false
+port = {{ ws_port }}
+apis = ["web3", "eth", "net", "parity", "rpc", "secretstore", "pubsub"]
+origins = ["all"]
+hosts = ["all"]
+interface = "all"
+
+{% if signer_address != "" %}
+[account]
+unlock = ["{{ signer_address }}"]
+password = ["pass.pwd"]
+{% endif %}
+
+{% if mining %}
+[mining]
+engine_signer = "{{ signer_address }}"
+reseal_on_txs = "none"
+{% endif %}

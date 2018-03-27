@@ -1,0 +1,30 @@
+###### Accepts the following parametrs:
+#
+# node_name             general name of the node (not used directly)
+# node_path             path to the node folder (also used in templates)
+# parity_bin_url        (*) url from which to download parity binary
+# parity_bin_sha256     (*) sha256 checksum of the binary
+# service_name          name to be used for parity service
+# chain_json_url        (*) (optional) url from which to download chain.json, can be omitted for built-in chains like kovan
+# chain_name            name of the chain as set in chain.json (also used in templates)
+# chain_folder_name     name of the chain folder as set in chain.json
+# bootnodes_url         (*) (optional) url from which to download bootnodes.txt
+# p2p_port              p2p port number
+# rpc_port              rpc port number
+# ws_port               ws_port number
+# signer_address        0x... address of the signer
+# signer_keyfile        json keyfile of the signer (only used in templates)
+# signer_password       password for signer keyfile (only used in templates)
+# mining                (*) (optional) True/False if signer is also a miner (default False) (only used in templates)
+#
+
+---
+parity_bin_url: "https://d1h4xl4cr1h0mo.cloudfront.net/v1.9.2/x86_64-unknown-linux-gnu/parity"
+parity_bin_sha256: "3604a030388cd2c22ebe687787413522106c697610426e09b3c5da4fe70bbd33"
+chain_json_url: ""
+bootnodes_url: ""
+mining: False
+
+signer_address: ""
+signer_keyfile: ""
+signer_password: ""

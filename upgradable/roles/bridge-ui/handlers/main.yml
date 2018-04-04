@@ -1,0 +1,8 @@
+---
+- name: restart {{ bridge_ui_service_name }}
+  become: yes
+  become_user: root
+  service:
+    name: "{{ bridge_ui_service_name }}"
+    state: restarted
+

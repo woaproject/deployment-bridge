@@ -10,8 +10,8 @@
     checksum: "sha256:{{ bridge_bin_sha256 }}"
     dest: "{{ bridge_path }}/bridge"
     mode: "0755"
-  # notify:
-  #   - restart {{ bridge_service_name }}
+  notify:
+    - restart {{ bridge_service_name }}
 
 - name: "Bridge - create file with home contract bytecode"
   template:
@@ -30,8 +30,8 @@
     src: config.toml.j2
     dest: "{{ bridge_path }}/config.toml"
     force: no
-  # notify:
-  #   - restart bridge
+  notify:
+    - restart bridge
 
 - name: "Bridge - create db.toml file"
   template:
@@ -48,20 +48,18 @@
     owner: root
     group: root
     mode: "0755"
-  # notify:
-  #   - restart {{ bridge_service_name }}
+  notify:
+    - restart {{ bridge_service_name }}
 
-- name: "Bridge - ensure bridge service is running and enabled to start at boot"
+- name: "Bridge - enabled bridge service to start at boot"
   become: yes
   become_user: root
-  service:
-    name: "{{ bridge_service_name }}"
+  command: "systemctl enable {{ bridge_service_name }}.service"
+
+- name: "Bridge - ensure bridge service is running"
+  become: yes
+  become_user: root
+  systemd:
+    name: "{{ bridge_service_name }}.service"
     state: started
     enabled: yes
-
-- name: restart {{ bridge_service_name }}
-  become: yes
-  become_user: root
-  service:
-    name: "{{ bridge_service_name }}"
-    state: restarted

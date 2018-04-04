@@ -46,6 +46,7 @@
   template:
     src: node.toml.j2
     dest: "{{ node_path }}/node.toml"
+    force: no
   # notify:
   #   - restart {{ service_name }}
 
@@ -69,17 +70,15 @@
   # notify:
   #   - restart {{ service_name }}
 
-- name: "{{ node_name }} - ensure parity service is running and enabled to start at boot"
+- name: "{{ node_name }} - enable parity service to start on boot"
   become: yes
   become_user: root
-  service:
-    name: "{{ service_name }}"
+  command: "systemctl enable {{ service_name }}.service"
+
+- name: "{{ node_name }} - ensure parity service started"
+  become: yes
+  become_user: root
+  systemd:
+    name: "{{ service_name }}.service"
     state: started
     enabled: yes
-
-# - name: restart {{ service_name }}
-#   become: yes
-#   become_user: root
-#   service:
-#     name: "{{ service_name }}"
-#     state: restarted

@@ -6,9 +6,8 @@
     dest: "{{ bridge_ui_path }}"
 
 - name: Bridge-ui - run npm install
-  command: "npm install"
-  args:
-    chdir: "{{ bridge_ui_path }}"
+  npm:
+    path: "{{ bridge_ui_path }}"
 
 - name: Bridge-ui - create .env file
   template:
@@ -19,16 +18,22 @@
   command: "npm run build"
   args:
     chdir: "{{ bridge_ui_path }}"
+  notify:
+    - restart {{ bridge_ui_service_name }}
 
 - name: Bridge-ui - install global npm package (http-server)
-  become: true
+  become: yes
   become_user: root
-  command: npm install -g http-server
+  npm:
+    name: http-server
+    global: yes
 
 - name: Bridge-ui - install global npm package (pm2)
-  become: true
+  become: yes
   become_user: root
-  command: npm install -g pm2
+  npm:
+    name: pm2
+    global: yes
 
 ### install service
 - name: Bridge-ui - install bridge-ui service
@@ -36,7 +41,7 @@
   become_user: root
   template:
     src: bridge-ui.service.j2
-    dest: /etc/systemd/system/bridge-ui.service
+    dest: "/etc/systemd/system/{{ bridge_ui_service_name }}.service"
     owner: root
     group: root
     mode: "0755"
@@ -44,7 +49,12 @@
 - name: Bridge-ui - ensure bridge-ui is running and enabled to start at boot
   become: yes
   become_user: root
-  service:
-    name: bridge-ui
+  command: "systemctl enable {{ bridge_ui_service_name }}.service"
+
+- name: Bridge-ui - ensure bridge-ui is running and enabled to start at boot
+  become: yes
+  become_user: root
+  systemd:
+    name: "{{ bridge_ui_service_name }}.service"
     state: started
     enabled: yes

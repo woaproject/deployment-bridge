@@ -1,15 +1,15 @@
 ## Ansible playbooks for deploying cross-chain bridges
 
 **This is work in progress**
-At the current moment trying to replicate functionality of https://github.com/poanetwork/parity-bridge-research
-
-At the present moment this playbook is to perform initial deployment of the bridge and parity services. If you want to run it against existing installation some files might be overwritten, please at least set `initial_deployment: no` in `hosts.yml`.
+The following README is for an "older" version. Newer version based on upgradable contracts is stored in https://github.com/poanetwork/deployment-bridge/tree/master/upgradable but is not fully completed yet.
 
 ### Requirements
 * on local machine: python, ansible
 * on remote: ubuntu server 16.04, python 3
 
 ### Deployment process
+
+At the present moment this playbook is to perform initial deployment of the bridge and parity services. If you want to run it against existing installation some files might be overwritten, please at least set `initial_deployment: no` in `hosts.yml`.
 
 #### Option-1: preconfigured dev instance
 1. create `hosts.yml` file based with the following content (replace `192.0.2.1` with your server's IP address, `ansible_user` with the user you can ssh with)

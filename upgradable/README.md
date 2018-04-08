@@ -2,6 +2,7 @@
 
 For development version, do the following:
 
+## Deployment
 1. create file `hosts.yml` from `hosts.yml.template`, replace empty strings with values for your node.
 
 If you want to use custom binaries of bridge or parity, you need to provide additional parameters:
@@ -34,3 +35,8 @@ ansible-playbook -i hosts.yml authority-node.yml
 ansible-playbook -i hosts.yml ui-node.yml
 ```
 it will be available on http://localhost:3000
+
+## Details
+1. Playbook creates folder `poa-bridge` with subfolders `parity-home`, `parity-foreign` and `bridge`.
+2. parity logs can be found in `parity-home/logs/parity.log` subfolder, or with journalctl: `journalctl -f -u parity-home`
+3. bridge logs can be obtained with journalctl: `journalctl -f -u bridge` or in system logs: `tail -F /var/log/syslog | grep bridge`

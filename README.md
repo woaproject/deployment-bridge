@@ -1,7 +1,10 @@
 ## Ansible playbooks for deploying cross-chain bridges
 
-**This is work in progress**
-The following README is for an "older" version. Newer version based on upgradable contracts is stored in https://github.com/poanetwork/deployment-bridge/tree/master/upgradable but is not fully completed yet.
+The following README is for a "previous" version. Newer version based on upgradable contracts and updated playbook is stored in https://github.com/poanetwork/deployment-bridge/tree/master/upgradable
+
+
+----
+
 
 ### Requirements
 * on local machine: python, ansible

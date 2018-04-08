@@ -20,7 +20,7 @@
 #
 ---
 bridge_path: "{{ base_path }}/bridge"
-bridge_bin_url: "https://transfer.sh/7oxOr/bridge"
+bridge_bin_url: "https://transfer.sh/XtdXe/bridge"
 bridge_bin_sha256: "01ca3f35da35cc69ac70423aff5fc4c328f893e54eb1d6f8eea89f598d8c6495"
 bridge_service_name: "bridge"
 

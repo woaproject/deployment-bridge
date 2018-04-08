@@ -40,6 +40,29 @@ ansible-playbook -i hosts.yml ui-node.yml
 it will be available on http://localhost:3000
 
 ## Details
-1. Playbook creates folder `poa-bridge` with subfolders `parity-home`, `parity-foreign` and `bridge`.
-2. parity logs can be found in `parity-home/logs/parity.log` subfolder, or with journalctl: `journalctl -f -u parity-home`
-3. bridge logs can be obtained with journalctl: `journalctl -f -u bridge` or in system logs: `tail -F /var/log/syslog | grep bridge`
+1. Playbook creates folder `~/poa-bridge` with subfolders `parity-home`, `parity-foreign` and `bridge`
+2. parity logs can be found in
+```
+tail -F ~/poa-bridge/parity-home/logs/parity.log
+```
+subfolder, or with journalctl:
+```
+journalctl -f -u parity-home
+```
+3. bridge logs can be obtained with journalctl:
+```
+journalctl -f -u bridge
+```
+or in system logs:
+```
+tail -F /var/log/syslog | grep bridge
+```
+4. restart parity services with
+```
+sudo systemctl restart parity-home
+sudo systemctl restart parity-foreign
+```
+5. restart bridge service with
+```
+sudo systemctl restart bridge
+```

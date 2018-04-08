@@ -1,6 +1,6 @@
-- name: restart {{ service_name }}
+- name: restart {{ foreign_service_name }}
   become: yes
   become_user: root
   service:
-    name: "{{ service_name }}"
+    name: "{{ foreign_service_name }}"
     state: restarted

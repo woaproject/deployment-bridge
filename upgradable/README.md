@@ -3,9 +3,11 @@
 For development version, do the following:
 
 ## Deployment
-1. create file `hosts.yml` from `hosts.yml.template`, replace empty strings with values for your node.
+0. create an Ubuntu 16.04 server and get it's IP address
 
-If you want to use custom binaries of bridge or parity, you need to provide additional parameters:
+1. create file `hosts.yml` from `hosts.yml.template`, replace `192.0.2.1` with your server's IP address, `ansible_user` with ssh user, empty strings with values for your node.
+
+If you want to use custom binaries of bridge or parity, you need to append additional parameters:
 ```
 bridge_bin_url: "https://"
 bridge_bin_sha256: "0123..."
@@ -15,7 +17,7 @@ parity_bin_sha256: "0123..."
 ```
 use `sha256sum` (linux) or `shasum -a 256` (mac) to calculate checksums
 
-If you want to connect to a custom bridge contract, provide its bytecode, address and block numbers:
+If you want to connect to a custom bridge contract, append its bytecode, address and block numbers:
 ```
 bridge_home_contract_bytecode: "6060..."
 bridge_foreign_contract_bytecode: "6060..."
@@ -24,6 +26,7 @@ bridge_foreign_contract_address: "0x01234..."
 bridge_home_contract_deploy: 1768893
 bridge_foreign_contract_deploy: 6715777
 ```
+You can alternatively set these values in `group_vars/sokol-kovan.yml`
 
 2. to install an authority node, run:
 ```

@@ -51,6 +51,22 @@
   notify:
     - restart {{ bridge_service_name }}
 
+# - name: "Wait for parity-home node to sync"
+#   command: curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_syncing","params":[],"id":1}' http://localhost:{{ home_rpc_port }}
+#   register: home_sync_status
+#   until: not (home_sync_status.stdout | from_json).result
+#   delay: 30
+#   retries: 100
+#   when: wait_sync
+
+# - name: "Wait for parity-foreign node to sync"
+#   command: curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_syncing","params":[],"id":1}' http://localhost:{{ home_rpc_port }}
+#   register: foreign_sync_status
+#   until: not (foreign_sync_status.stdout | from_json).result
+#   delay: 30
+#   retries: 100
+#   when: wait_sync
+
 - name: "Bridge - enabled bridge service to start at boot"
   become: yes
   become_user: root

@@ -15,9 +15,14 @@
 # foreign_poll_interval                   bridge config option (used only in templates)
 # foreign_request_timeout                 bridge config option (used only in templates)
 # db_toml_location                        path to bridge db.toml **on local machine**
-
+# restart_delay_sec                       (*) delay in seconds between restarts of brige service. Set to 0 to omit this option (used only in templates)
+# wait_sync                               (*) yes/no - should playbook wait till parity nodes are synced before starting bridge service
+#
 ---
 bridge_path: "{{ base_path }}/bridge"
 bridge_bin_url: "https://transfer.sh/7oxOr/bridge"
 bridge_bin_sha256: "01ca3f35da35cc69ac70423aff5fc4c328f893e54eb1d6f8eea89f598d8c6495"
 bridge_service_name: "bridge"
+
+restart_delay_sec: 3
+wait_sync: yes

@@ -9,6 +9,9 @@ WorkingDirectory={{ node_path }}
 Environment=RUST_LOG=info
 ExecStart={{ node_path }}/parity --config node.toml
 Restart=always
+{% if restart_delay_sec > 0 %}
+RestartSec={{ restart_delay_sec }}
+{% endif %}
 
 [Install]
 WantedBy=multi-user.target

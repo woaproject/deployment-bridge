@@ -4,6 +4,11 @@
     path: "{{ node_path }}"
     state: directory
 
+- name: "{{ node_name }} - create logs folder"
+  file:
+    path: "{{ node_path }}/logs"
+    state: directory
+
 - name: "{{ node_name }} - download parity binary"
   get_url:
     url: "{{ parity_bin_url }}"

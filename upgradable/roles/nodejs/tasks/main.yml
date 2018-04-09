@@ -21,11 +21,6 @@
     repo: 'deb {{ nodejs_deb_url }} {{ ansible_distribution_release }} main'
     state: present
 
-# - name: Install nodejs
-#   become: true
-#   become_user: root
-#   shell: "curl -sL {{ nodejs_deb_url }} | sudo -E bash -"
-
 - name: Nodejs - install nodejs package
   become: true
   become_user: root

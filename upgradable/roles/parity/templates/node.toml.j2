@@ -14,21 +14,6 @@ nat = "extip:{{ ansible_host }}"
 reserved_peers = "{{ bootnodes_url | basename }}"
 {% endif %}
 
-[rpc]
-port = {{ rpc_port }}
-apis = ["web3", "eth", "net", "parity", "rpc", "secretstore", "traces"]
-cors = ["all"]
-hosts = ["all"]
-interface = "all"
-
-[websockets]
-disable = false
-port = {{ ws_port }}
-apis = ["web3", "eth", "net", "parity", "rpc", "secretstore", "pubsub"]
-origins = ["all"]
-hosts = ["all"]
-interface = "all"
-
 {% if signer_address != "" %}
 [account]
 unlock = ["{{ signer_address }}"]

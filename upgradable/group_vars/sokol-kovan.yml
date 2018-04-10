@@ -2,12 +2,11 @@
 home_name: "sokol"
 home_node_path: "{{ base_path }}/home-node"
 home_service_name: "parity-home"
-#home_bootnodes_url: "https://raw.githubusercontent.com/poanetwork/poa-chain-spec/sokol/bootnodes.txt"
-home_bootnodes_url: "https://gist.githubusercontent.com/phahulin/98ba6a143c2636f11b2ba95e3ed61746/raw/6c8283f5c9f5f47456814a32584a125a3466f75c/sokol-azure-bootnodes.txt"
+home_bootnodes_url: "https://raw.githubusercontent.com/poanetwork/poa-chain-spec/sokol/bootnodes.txt"
 home_chain_json_url: "https://raw.githubusercontent.com/poanetwork/poa-chain-spec/sokol/spec.json"
 home_chain_name: "Sokol"
 home_chain_folder_name: "Sokol"
-home_p2p_port: 30305
+home_p2p_port: 30303
 home_rpc_port: 8545
 home_ws_port: 8546
 home_required_confirmations: 0
@@ -20,9 +19,9 @@ foreign_node_path: "{{ base_path }}/foreign-node"
 foreign_service_name: "parity-foreign"
 foreign_chain_name: "kovan"
 foreign_chain_folder_name: "kovan"
-foreign_p2p_port: 30308
-foreign_rpc_port: 8591
-foreign_ws_port: 8541
+foreign_p2p_port: 40303
+foreign_rpc_port: 9545
+foreign_ws_port: 9546
 foreign_required_confirmations: 0
 foreign_poll_interval: 2
 foreign_request_timeout: 360

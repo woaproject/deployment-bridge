@@ -1,4 +1,4 @@
-- name: restart {{ home_service_name }}
+- name: "restart {{ home_service_name }}"
   become: yes
   become_user: root
   service:

@@ -1,0 +1,13 @@
+---
+- name: restart ufw
+  become: yes
+  become_user: root
+  service:
+    name: ufw
+    state: restarted
+
+- name: restart chrony
+  become: yes
+  become_user: root
+  service:
+    name: chrony

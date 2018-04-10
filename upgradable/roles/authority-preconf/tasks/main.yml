@@ -1,0 +1,6 @@
+---
+- name: Preconf - setup UFW firewall
+  import_tasks: ufw.yml
+
+- name: Preconf - setup Chrony
+  import_tasks: chrony.yml

@@ -1,6 +1,7 @@
 ---
 - hosts: all
   roles:
+    - authority-preconf
     - home-node
     - foreign-node
     - bridge

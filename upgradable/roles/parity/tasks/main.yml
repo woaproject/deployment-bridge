@@ -9,6 +9,31 @@
     path: "{{ node_path }}/logs"
     state: directory
 
+- name: "{{ node_name }} - create old logs folder"
+  file:
+    path: "{{ node_path }}/logs/old"
+    state: directory
+
+- name: "{{ node_name }} - create logrotate conf"
+  become: yes
+  become_user: root
+  template:
+    src: logrotate.conf.j2
+    dest: "{{ node_path }}/logrotate.conf"
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: "{{ node_name }} - install logrotate cronjob"
+  become: yes
+  become_user: root
+  template:
+    src: logrotate.j2
+    dest: "/etc/cron.hourly/{{ service_name }}-logrotate"
+    owner: root
+    group: root
+    mode: "0755"
+
 - name: "{{ node_name }} - download parity binary"
   get_url:
     url: "{{ parity_bin_url }}"

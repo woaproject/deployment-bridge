@@ -5,3 +5,4 @@
 
 ---
 nodejs_deb_url: "https://deb.nodesource.com/node_8.x"
+nodesource_key_id: "68576280"

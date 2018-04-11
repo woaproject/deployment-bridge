@@ -11,3 +11,7 @@ bridge_ui_path: "{{ base_path }}/bridge-ui"
 bridge_ui_service_name: "bridge-ui"
 bridge_ui_repo: "https://github.com/poanetwork/bridge-ui"
 bridge_ui_branch: "master"
+
+bridge_ui_home_rpc_url: "http://{{ ansible_host }}:{{ home_rpc_port }}"
+bridge_ui_foreign_rpc_url: "http://{{ ansible_host }}:{{ foreign_rpc_port }}"
+bridge_ui_port: 8080

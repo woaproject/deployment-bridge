@@ -1,6 +1,4 @@
 ---
 - hosts: all
   roles:
-    - role: home-node
-    - role: foreign-node
     - role: bridge-ui

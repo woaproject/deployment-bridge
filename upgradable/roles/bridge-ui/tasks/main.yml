@@ -1,4 +1,21 @@
 ---
+- name: Brdige-ui - install packages (apt)
+  become: yes
+  become_user: root
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - gcc
+    - g++
+    - make
+
+- name: Bridge-ui - install node-gyp (npm)
+  become: yes
+  become_user: root
+  npm:
+    name: node-gyp
+    global: yes
+
 - name: Bridge-ui - clone repo
   git:
     repo: "{{ bridge_ui_repo }}"
@@ -15,20 +32,22 @@
     dest: "{{ bridge_ui_path }}/.env"
 
 - name: Bridge-ui - run npm build
+  environment:
+    PUBLIC_URL: "."
   command: "npm run build"
   args:
     chdir: "{{ bridge_ui_path }}"
   notify:
     - restart {{ bridge_ui_service_name }}
 
-- name: Bridge-ui - install global npm package (http-server)
-  become: yes
-  become_user: root
-  npm:
-    name: http-server
-    global: yes
+# - name: Bridge-ui - install global npm package (http-server)
+#   become: yes
+#   become_user: root
+#   npm:
+#     name: http-server
+#     global: yes
 
-- name: Bridge-ui - install global npm package (pm2)
+- name: Bridge-ui - install pm2 (npm)
   become: yes
   become_user: root
   npm:
@@ -46,12 +65,12 @@
     group: root
     mode: "0755"
 
-- name: Bridge-ui - ensure bridge-ui is running and enabled to start at boot
+- name: Bridge-ui - ensure bridge-ui is enabled to start at boot
   become: yes
   become_user: root
   command: "systemctl enable {{ bridge_ui_service_name }}.service"
 
-- name: Bridge-ui - ensure bridge-ui is running and enabled to start at boot
+- name: Bridge-ui - ensure bridge-ui is running
   become: yes
   become_user: root
   systemd:

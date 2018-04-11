@@ -8,6 +8,6 @@ RemainAfterExit=true
 User={{ ansible_user }}
 Group={{ ansible_user }}
 WorkingDirectory={{ bridge_ui_path }}/build
-ExecStart=/usr/bin/pm2 start --name bridge-ui --interpreter http-server {{ bridge_ui_path }}/build
+ExecStart=/usr/bin/pm2 serve --instances max --name bridge-ui . {{ bridge_ui_port }}
 [Install]
 WantedBy=multi-user.target

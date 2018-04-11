@@ -2,7 +2,7 @@
 
 For development version, do the following:
 
-## Deployment
+## Deploying bridge authority node
 0. create an Ubuntu 16.04 server and get it's IP address
 
 1. create file `hosts.yml` from `hosts.yml.template`, replace `192.0.2.1` with your server's IP address, `ansible_user` with ssh user, empty strings with values for your node.

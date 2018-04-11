@@ -1,28 +1,28 @@
 ---
 - name: Nodejs - ensure apt-transport-https is installed
-  become: true
+  become: yes
   become_user: root
   apt:
     name: apt-transport-https
     state: present
 
-- name: Nodejs - add nodejs repository key
-  become: true
+- name: Nodejs - add nodesource repository key
+  become: yes
   become_user: root
   apt_key:
     keyserver: keyserver.ubuntu.com
-    id: 68576280
+    id: "{{ nodesource_key_id }}"
     state: present
 
-- name: Nodejs - add nodejs repository
-  become: true
+- name: Nodejs - add nodesource repository
+  become: yes
   become_user: root
   apt_repository:
-    repo: 'deb {{ nodejs_deb_url }} {{ ansible_distribution_release }} main'
+    repo: "deb {{ nodejs_deb_url }} {{ ansible_distribution_release }} main"
     state: present
 
 - name: Nodejs - install nodejs package
-  become: true
+  become: yes
   become_user: root
   apt:
     name: nodejs

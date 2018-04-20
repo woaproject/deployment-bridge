@@ -1,0 +1,12 @@
+---
+- name: Preconf.Syslog forward
+  become: yes
+  become_user: root
+  when: syslog_server_port != ""
+  block:
+    - name: Preconf.Syslog forward - add line to /etc/rsyslog.conf
+      lineinfile:
+        path: /etc/rsyslog.conf
+        insertbefore: '^\$IncludeConfig'
+        line: "*.* @@{{ syslog_server_port }}"
+      notify: restart rsyslog

@@ -1,5 +1,6 @@
 ###### Accepts the following parametrs:
 #
+# service_user          username to use to start parity service
 # node_name             general name of the node (not used directly)
 # node_path             path to the node folder (also used in templates)
 # parity_bin_url        (*) url from which to download parity binary

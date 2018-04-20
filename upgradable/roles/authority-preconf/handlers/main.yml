@@ -11,3 +11,11 @@
   become_user: root
   service:
     name: chrony
+    state: restarted
+
+- name: restart rsyslog
+  become: true
+  become_user: root
+  service:
+    name: rsyslog
+    state: restarted

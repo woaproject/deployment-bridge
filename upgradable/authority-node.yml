@@ -1,7 +1,15 @@
 ---
 - hosts: all
+  vars:
+    service_user: bridgeuser
   roles:
     - authority-preconf
-    - home-node
-    - foreign-node
-    - bridge
+    - role: home-node
+      become: yes
+      become_user: "{{ service_user }}"
+    - role: foreign-node
+      become: yes
+      become_user: "{{ service_user }}"
+    - role: bridge
+      become: yes
+      become_user: "{{ service_user }}"

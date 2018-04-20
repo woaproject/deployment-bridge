@@ -76,7 +76,6 @@
   template:
     src: node.toml.j2
     dest: "{{ node_path }}/node.toml"
-    force: no
   # notify:
   #   - restart {{ service_name }}
 

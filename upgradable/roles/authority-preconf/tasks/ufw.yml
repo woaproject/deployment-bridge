@@ -30,7 +30,7 @@
     - name: Preconf.UFW - always allow ssh access
       ufw:
         rule: "allow"
-        port: "22"
+        port: "{{ ansible_ssh_port|default(22) }}"
         proto: "tcp"
       notify:
         - restart ufw

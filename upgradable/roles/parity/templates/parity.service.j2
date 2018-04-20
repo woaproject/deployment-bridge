@@ -3,8 +3,8 @@ Description={{ service_name }}
 After=network.target
 
 [Service]
-User={{ ansible_user }}
-Group={{ ansible_user }}
+User={{ service_user }}
+Group={{ service_user }}
 WorkingDirectory={{ node_path }}
 Environment=RUST_LOG=info
 ExecStart={{ node_path }}/parity --config node.toml

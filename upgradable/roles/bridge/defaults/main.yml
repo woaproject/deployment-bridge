@@ -20,8 +20,8 @@
 #
 ---
 bridge_path: "{{ base_path }}/bridge"
-bridge_bin_url: "https://transfer.sh/XtdXe/bridge"
-bridge_bin_sha256: "01ca3f35da35cc69ac70423aff5fc4c328f893e54eb1d6f8eea89f598d8c6495"
+bridge_bin_url: "https://transfer.sh/Gh35m/bridge"
+bridge_bin_sha256: "d1d8636652f1719a3d836eaaf3327eae25d7de43e40b8af887d5de5b0694b1f1"
 bridge_service_name: "bridge"
 
 restart_delay_sec: 3

@@ -1,5 +1,5 @@
 ### global settings
-base_path: "/home/{{ ansible_user }}/poa-bridge"
+base_path: "/home/{{ service_user }}/poa-bridge"
 
 ### parity home side configs
 home_name: "home-node"

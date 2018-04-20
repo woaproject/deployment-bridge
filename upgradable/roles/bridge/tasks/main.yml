@@ -17,19 +17,16 @@
   template:
     src: "HomeBridge.bin.j2"
     dest: "{{ bridge_path }}/HomeBridge.bin"
-    force: no
 
 - name: "Bridge - create file with foreign contract bytecode"
   template:
     src: "ForeignBridge.bin.j2"
     dest: "{{ bridge_path }}/ForeignBridge.bin"
-    force: no
 
 - name: "Bridge - create bridge config"
   template:
     src: config.toml.j2
     dest: "{{ bridge_path }}/config.toml"
-    force: no
   notify:
     - restart bridge
 
@@ -51,7 +48,7 @@
   notify:
     - restart {{ bridge_service_name }}
 
-- name: "Wait for parity-home node to sync"
+- name: "Bridge - wait for parity-home node to sync"
   uri:
     url: "http://localhost:{{ home_rpc_port }}"
     method: POST
@@ -68,7 +65,7 @@
   retries: 120
   when: wait_sync
 
-- name: "Wait for parity-foreign node to sync"
+- name: "Bridge - wait for parity-foreign node to sync"
   uri:
     url: "http://localhost:{{ foreign_rpc_port }}"
     method: POST

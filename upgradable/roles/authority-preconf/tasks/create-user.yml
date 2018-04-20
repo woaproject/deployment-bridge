@@ -1,0 +1,9 @@
+---
+- name: Preconf.Create user
+  become: yes
+  become_user: root
+  user:
+    name: "{{ service_user }}"
+    groups: ""
+    shell: "/bin/bash"
+    append: yes

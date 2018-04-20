@@ -21,7 +21,7 @@
     repo: "deb {{ nodejs_deb_url }} {{ ansible_distribution_release }} main"
     state: present
 
-- name: Nodejs - install nodejs package
+- name: Nodejs - install nodejs
   become: yes
   become_user: root
   apt:

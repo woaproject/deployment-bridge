@@ -1,4 +1,6 @@
 ---
 - hosts: all
+  vars:
+    service_user: bridgeuser
   roles:
     - role: bridge-ui

@@ -89,8 +89,8 @@ sudo systemctl restart bridge
 ```
 
 ## Setup details
-To get more details about the setup, [go here](./DETAILS)
+To get more details about the setup, [go here](./DETAILS.md)
 
 ## Changes required for new bridges
-To prepare configuration files for newly deployed bridges, [go here](./NEW_BRIDGE)
+To prepare configuration files for newly deployed bridges, [go here](./NEW-BRIDGE.md)
 

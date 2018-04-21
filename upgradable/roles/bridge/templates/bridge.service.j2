@@ -1,6 +1,6 @@
 [Unit]
 Description=bridge
-After=network.target
+After=network.target {{ home_service_name }}.service {{ foreign_service_name }}.service
 
 [Service]
 User={{ service_user }}

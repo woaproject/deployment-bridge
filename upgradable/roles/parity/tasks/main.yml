@@ -59,7 +59,6 @@
   get_url:
     url: "{{ chain_json_url }}"
     dest: "{{ node_path }}/{{ chain_name | lower }}.json"
-    mode: "0755"
   when: chain_json_url != ""
   # notify:
   #   - restart {{ service_name }}

@@ -3,7 +3,7 @@ sokol-kovan:
   hosts:
     192.0.2.1:
       ansible_user: ubuntu
-      ansible_python_interpreter: "/usr/bin/env python"
+      ansible_python_interpreter: "/usr/bin/python3"
       home_signer_address: ""
       home_signer_keyfile: ''
       home_signer_password: ""

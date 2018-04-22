@@ -4,7 +4,17 @@ base_path: "/home/{{ service_user }}/poa-bridge"
 ### parity home side configs
 home_name: "home-node"
 home_bootnodes: ""
+home_node_path: "{{ base_path }}/home-node"
+home_service_name: "parity-home"
+home_p2p_port: 30303
+home_rpc_port: 8545
+home_ws_port: 8546
 
 ### parity foreign side configs
 foreign_name: "foreign-node"
 foreign_bootnodes: ""
+foreign_node_path: "{{ base_path }}/foreign-node"
+foreign_service_name: "parity-foreign"
+foreign_p2p_port: 40303
+foreign_rpc_port: 9545
+foreign_ws_port: 9546

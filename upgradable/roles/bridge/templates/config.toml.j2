@@ -3,9 +3,9 @@ estimated_gas_cost_of_withdraw = {{ bridge_estimated_gas_cost_of_withdraw }}
 [home]
 account = "{{ home_signer_address }}"
 ipc = "{{ home_node_path }}/parity_data/jsonrpc.ipc"
-required_confirmations = {{ home_required_confirmations }}
-poll_interval = {{ home_poll_interval }}
-request_timeout = {{ home_request_timeout }}
+required_confirmations = {{ bridge_home_required_confirmations }}
+poll_interval = {{ bridge_home_poll_interval }}
+request_timeout = {{ bridge_home_request_timeout }}
 
 [home.contract]
 bin = "HomeBridge.bin"
@@ -13,18 +13,18 @@ bin = "HomeBridge.bin"
 [foreign]
 account = "{{ foreign_signer_address }}"
 ipc = "{{ foreign_node_path }}/parity_data/jsonrpc.ipc"
-required_confirmations = {{ foreign_required_confirmations }}
-poll_interval = {{ foreign_poll_interval }}
-request_timeout = {{ foreign_request_timeout }}
+required_confirmations = {{ bridge_foreign_required_confirmations }}
+poll_interval = {{ bridge_foreign_poll_interval }}
+request_timeout = {{ bridge_foreign_request_timeout }}
 
 [foreign.contract]
 bin = "ForeignBridge.bin"
 
 [authorities]
 accounts = [
-  "{{ bridge_authorities | join ('",\n"') }}"
+  "{{ bridge_authorities | join ('",\n  "') }}"
 ]
-required_signatures = 1
+required_signatures = {{ bridge_authorities_requires_signatures }}
 
 [transactions]
 deposit_relay = { gas = {{ bridge_deposit_relay_gas }} }

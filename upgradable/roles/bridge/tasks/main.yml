@@ -30,11 +30,21 @@
   notify:
     - restart bridge
 
-- name: "Bridge - create db.toml file"
+- name: "Bridge - create db.toml file from template"
   template:
     src: "db.toml.j2"
     dest: "{{ bridge_path }}/db.toml"
     force: no
+  when: db_toml_location == ""
+
+- name: "Bridge - copy db.toml file from local machine"
+  copy:
+    src: "{{ db_toml_location }}"
+    dest: "{{ bridge_path }}/db.toml"
+    force: no
+    owner: "{{ service_user }}"
+    group: "{{ service_user }}"
+  when: db_toml_location != ""
 
 - name: "Bridge - install bridge service"
   become: yes
@@ -60,7 +70,7 @@
       params: []
       id: 1
   register: home_sync_status
-  until: home_sync_status.json.result == False
+  until: home_sync_status.failed == False and home_sync_status.json.result == False
   delay: 30
   retries: 120
   when: wait_sync
@@ -77,7 +87,7 @@
       params: []
       id: 1
   register: foreign_sync_status
-  until: foreign_sync_status.json.result == False
+  until: foreign_sync_status.failed == False and foreign_sync_status.json.result == False
   delay: 30
   retries: 120
   when: wait_sync
@@ -94,3 +104,4 @@
     name: "{{ bridge_service_name }}.service"
     state: started
     enabled: yes
+  when: wait_sync

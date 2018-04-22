@@ -23,8 +23,8 @@ bridge_withdraw_relay_gas: 3000000
 bridge_withdraw_confirm_gas: 3000000
 
 bridge_authorities:
-  - "{{ home_signer_address }}"
-  - "{{ foreign_signer_address }}"
+  - "0x006E27B6A72E1f34C626762F3C4761547Aff1421"
+  - "0x006E27B6A72E1f34C626762F3C4761547Aff1421"
 bridge_authorities_requires_signatures: 1
 
 bridge_home_required_confirmations: 0
@@ -36,10 +36,10 @@ bridge_foreign_request_timeout: 360
 
 bridge_home_contract_bytecode: "6060..."
 bridge_foreign_contract_bytecode: "6060..."
-bridge_home_contract_address: "0xad1dae0320717a288912ff7bae766ac87e7d14a5"
-bridge_foreign_contract_address: "0xfd03be9947cbecb14a1ae8729936e23af7a0b50b"
-bridge_home_contract_deploy: 1768893
-bridge_foreign_contract_deploy: 6715777
+bridge_home_contract_address: "0x9A3EE574D3945201064A4CfcE56deed0c576422e"
+bridge_foreign_contract_address: "0x4c4C8BB1ea9d81543764e1e59bEc7773b1Df298e"
+bridge_home_contract_deploy: 2079636
+bridge_foreign_contract_deploy: 6964652
 ```
 
 Let's examine available options:

@@ -41,6 +41,7 @@
   copy:
     src: "{{ db_toml_location }}"
     dest: "{{ bridge_path }}/db.toml"
+    force: no
     owner: "{{ service_user }}"
     group: "{{ service_user }}"
   when: db_toml_location != ""
@@ -69,7 +70,7 @@
       params: []
       id: 1
   register: home_sync_status
-  until: home_sync_status.json.result == False
+  until: home_sync_status.failed == False and home_sync_status.json.result == False
   delay: 30
   retries: 120
   when: wait_sync
@@ -86,7 +87,7 @@
       params: []
       id: 1
   register: foreign_sync_status
-  until: foreign_sync_status.json.result == False
+  until: foreign_sync_status.failed == False and foreign_sync_status.json.result == False
   delay: 30
   retries: 120
   when: wait_sync

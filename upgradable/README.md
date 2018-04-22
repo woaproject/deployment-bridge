@@ -39,55 +39,6 @@ ansible-playbook -i hosts.yml [--ask-become-pass] authority-node.yml
 ```
 3. Playbook should complete without errors
 
-If you want to use custom binaries of bridge or parity, you need to append additional parameters:
-```
-bridge_bin_url: "https://"
-bridge_bin_sha256: "0123..."
-
-parity_bin_url: "https://..."
-parity_bin_sha256: "0123..."
-```
-use `sha256sum` (linux) or `shasum -a 256` (mac) to calculate checksums
-
-If you want to connect to a custom bridge contract, append its bytecode, address and block numbers:
-```
-bridge_home_contract_bytecode: "6060..."
-bridge_foreign_contract_bytecode: "6060..."
-bridge_home_contract_address: "0x01234..."
-bridge_foreign_contract_address: "0x01234..."
-bridge_home_contract_deploy: 1768893
-bridge_foreign_contract_deploy: 6715777
-```
-You can alternatively set these values in `group_vars/sokol-kovan.yml`
-
-## Details
-1. Playbook creates folder `~/poa-bridge` with subfolders `parity-home`, `parity-foreign` and `bridge`
-2. parity logs can be found in
-```
-tail -F ~/poa-bridge/parity-home/logs/parity.log
-```
-subfolder, or with journalctl:
-```
-journalctl -f -u parity-home
-```
-3. bridge logs can be obtained with journalctl:
-```
-journalctl -f -u bridge
-```
-or in system logs:
-```
-tail -F /var/log/syslog | grep bridge
-```
-4. restart parity services with
-```
-sudo systemctl restart parity-home
-sudo systemctl restart parity-foreign
-```
-5. restart bridge service with
-```
-sudo systemctl restart bridge
-```
-
 ## Setup details
 To get more details about the setup, [go here](./DETAILS.md)
 

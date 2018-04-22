@@ -14,7 +14,7 @@ git clone https://github.com/poanetwork/deployment-bridge.git
 cd upgradable
 ```
 
-1. Create file `hosts.yml` from `hosts.yml.template`
+2. Create file `hosts.yml` from `hosts.yml.template`
 ```
 cp hosts.yml.template hosts.yml
 ```
@@ -33,11 +33,11 @@ This file contains parameters specific to your node, so you need to edit it and 
 
 ### Installing the node
 1. If ssh user can't execute `sudo` without password, you will need to add `--ask-become-pass` option below (without `[]` brackets) and provide sudo password when prompted by the playbook.
-1. Run the playbook
+2. Run the playbook
 ```
 ansible-playbook -i hosts.yml [--ask-become-pass] authority-node.yml
 ```
-1. Playbook should complete without errors
+3. Playbook should complete without errors
 
 If you want to use custom binaries of bridge or parity, you need to append additional parameters:
 ```

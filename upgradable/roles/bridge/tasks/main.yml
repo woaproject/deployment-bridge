@@ -30,11 +30,20 @@
   notify:
     - restart bridge
 
-- name: "Bridge - create db.toml file"
+- name: "Bridge - create db.toml file from template"
   template:
     src: "db.toml.j2"
     dest: "{{ bridge_path }}/db.toml"
     force: no
+  when: db_toml_location == ""
+
+- name: "Bridge - copy db.toml file from local machine"
+  copy:
+    src: "{{ db_toml_location }}"
+    dest: "{{ bridge_path }}/db.toml"
+    owner: "{{ service_user }}"
+    group: "{{ service_user }}"
+  when: db_toml_location != ""
 
 - name: "Bridge - install bridge service"
   become: yes
@@ -94,3 +103,4 @@
     name: "{{ bridge_service_name }}.service"
     state: started
     enabled: yes
+  when: wait_sync

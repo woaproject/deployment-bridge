@@ -12,4 +12,4 @@ dependencies:
     signer_address: "{{ foreign_signer_address }}"
     signer_keyfile: "{{ foreign_signer_keyfile }}"
     signer_password: "{{ foreign_signer_password }}"
-
+    light_client: "{{ foreign_light_client }}"

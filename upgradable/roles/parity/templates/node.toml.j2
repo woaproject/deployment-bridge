@@ -5,6 +5,9 @@ chain = "{{ chain_name | lower }}.json"
 chain = "{{ chain_name }}"
 {% endif %}
 base_path = "parity_data"
+{% if light_client %}
+light = true
+{% endif %}
 
 [network]
 port = {{ p2p_port }}

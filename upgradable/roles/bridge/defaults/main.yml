@@ -25,5 +25,8 @@ bridge_bin_sha256: "d1d8636652f1719a3d836eaaf3327eae25d7de43e40b8af887d5de5b0694
 bridge_service_name: "bridge"
 db_toml_location: ""
 
+bridge_home_contract_bytecode: ""
+bridge_foreign_contract_bytecode: ""
+
 restart_delay_sec: 3
 wait_sync: yes

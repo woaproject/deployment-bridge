@@ -14,3 +14,4 @@ dependencies:
     signer_address: "{{ home_signer_address }}"
     signer_keyfile: "{{ home_signer_keyfile }}"
     signer_password: "{{ home_signer_password }}"
+    light_client: "{{ home_light_client }}"

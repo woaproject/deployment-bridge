@@ -21,9 +21,17 @@
         path: /etc/rsyslog.conf
         insertbefore: '^\$IncludeConfig'
         content: |
+          $ActionResumeInterval 10
+          $ActionQueueSize 100000
+          $ActionQueueDiscardMark 97500
+          $ActionQueueHighWaterMark 80000
           $ActionQueueType LinkedList
-          $ActionQueueFileName srvrfwd
+          $ActionQueueFileName syslogqueue
+          $ActionQueueCheckpointInterval 100
+          $ActionQueueMaxDiskSpace 2g
           $ActionResumeRetryCount -1
           $ActionQueueSaveOnShutdown on
+          $ActionQueueTimeoutEnqueue 2
+          $ActionQueueDiscardSeverity 0
           *.* @@{{ syslog_server_port }}
       notify: restart rsyslog

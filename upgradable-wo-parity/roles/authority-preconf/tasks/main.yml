@@ -1,0 +1,12 @@
+---
+- name: Preconf - create user
+  import_tasks: create-user.yml
+
+- name: Preconf - setup UFW firewall
+  import_tasks: ufw.yml
+
+- name: Preconf - configure syslog forwarding
+  import_tasks: syslog-forward.yml
+
+- name: Preconf - run handlers immediately
+  meta: flush_handlers

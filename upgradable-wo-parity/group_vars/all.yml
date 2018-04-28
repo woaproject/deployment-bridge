@@ -1,0 +1,2 @@
+### global settings
+base_path: "/home/{{ service_user }}/poa-bridge"

@@ -15,14 +15,9 @@
     state: directory
 
 - name: "{{ node_name }} - create logrotate conf"
-  become: yes
-  become_user: root
   template:
     src: logrotate.conf.j2
     dest: "{{ node_path }}/logrotate.conf"
-    owner: root
-    group: root
-    mode: "0644"
 
 - name: "{{ node_name }} - install logrotate cronjob"
   become: yes
@@ -94,7 +89,6 @@
     dest: /etc/systemd/system/{{ service_name }}.service
     owner: root
     group: root
-    mode: "0755"
   # notify:
   #   - restart {{ service_name }}
 

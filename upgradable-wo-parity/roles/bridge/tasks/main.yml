@@ -23,6 +23,31 @@
     src: "ForeignBridge.bin.j2"
     dest: "{{ bridge_path }}/ForeignBridge.bin"
 
+- name: "Bridge - create keystore folder"
+  file:
+    path: "{{ bridge_path }}/{{ bridge_keystore_folder }}"
+    state: directory
+
+- name: "Bridge - create keystore files"
+  template:
+    src: "{{ item }}.j2"
+    dest: "{{ bridge_path }}/{{ bridge_keystore_folder }}/{{ item }}"
+  with_items:
+    - foreign-keystore.json
+    - home-keystore.json
+  notify:
+    - restart bridge
+
+- name: "Bridge - create password files"
+  template:
+    src: "{{ item }}.j2"
+    dest: "{{ bridge_path }}/{{ item }}"
+  with_items:
+    - foreign-password.txt
+    - home-password.txt
+  notify:
+    - restart bridge
+
 - name: "Bridge - create bridge config"
   template:
     src: config.toml.j2
@@ -57,40 +82,6 @@
   notify:
     - restart {{ bridge_service_name }}
 
-- name: "Bridge - wait for parity-home node to sync"
-  uri:
-    url: "http://localhost:{{ home_rpc_port }}"
-    method: POST
-    body_format: json
-    return_content: yes
-    body:
-      jsonrpc: "2.0"
-      method: "eth_syncing"
-      params: []
-      id: 1
-  register: home_sync_status
-  until: home_sync_status.failed == False and home_sync_status.json.result == False
-  delay: 30
-  retries: 120
-  when: wait_sync
-
-- name: "Bridge - wait for parity-foreign node to sync"
-  uri:
-    url: "http://localhost:{{ foreign_rpc_port }}"
-    method: POST
-    body_format: json
-    return_content: yes
-    body:
-      jsonrpc: "2.0"
-      method: "eth_syncing"
-      params: []
-      id: 1
-  register: foreign_sync_status
-  until: foreign_sync_status.failed == False and foreign_sync_status.json.result == False
-  delay: 30
-  retries: 120
-  when: wait_sync
-
 - name: "Bridge - enable bridge service to start at boot"
   become: yes
   become_user: root
@@ -103,4 +94,3 @@
     name: "{{ bridge_service_name }}.service"
     state: started
     enabled: yes
-  when: wait_sync

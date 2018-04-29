@@ -8,16 +8,10 @@ Installation consists of 2 parts:
 
 2. UFW is configured to allow inbound tcp connections only on ssh port (`22` by default) and tcp/udp connections on p2p ports:
     * `30303` (so that external ethereum nodes could communicate with bridge node, assuming they use default port)
-    * `home_p2p_port` (default value `30303`)
-    * `foreign_p2p_port` (default value `40303`)
 
-3. All outbound connections are allowed
+3. Syslog forwarding to remote server is setup by editing `/etc/rsyslog.conf` file. This is done only if `syslog_server_port` is not empty
 
-4. If NTP is not installed, then Chrony is installed to sync time. Playbook tries to determine if it runs on AWS node, in which case it uses Amazon time server
-
-5. Syslog forwarding to remote server is setup by editing `/etc/rsyslog.conf` file. This is done only if `syslog_server_port` is not empty
-
-6. Binaries and configuration files will be stored in the bridgeuser's home directory in `poa-bridge` folder, with the following structure:
+4. Binaries and configuration files will be stored in the bridgeuser's home directory in `poa-bridge` folder, with the following structure:
 ```
 .
 poa-bridge/
@@ -82,7 +76,7 @@ withdraw_relay = { gas = 3000000, gas_price = 1000000000 }
 withdraw_confirm = { gas = 3000000, gas_price = 1000000000 }
 ```
 
-4. Database `db.toml` file is created based on `roles/bridge/db.toml.j2`, example (in this case it will be the same for all newly-created nodes):
+3. Database `db.toml` file is created based on `roles/bridge/db.toml.j2`, example (in this case it will be the same for all newly-created nodes):
 ```
 home_contract_address = "0xad1dae0320717a288912ff7bae766ac87e7d14a5"
 foreign_contract_address = "0xfd03be9947cbecb14a1ae8729936e23af7a0b50b"
@@ -94,7 +88,7 @@ checked_withdraw_confirm = 6715777
 ```
 **OR** `db.toml` can be copied from local machine, in this case `db_toml_location` variable should be set in `hosts.yml` to absolute path of the file
 
-5. Bridge service is installed for `systemd` so that it auto-start on startup and auto-restarts if bridge process fails. Bridge service starts after parity services are started. Example of `/etc/systemd/system/bridge.service`
+4. Bridge service is installed for `systemd` so that it auto-start on startup and auto-restarts if bridge process fails. Bridge service starts after parity services are started. Example of `/etc/systemd/system/bridge.service`
 ```
 [Unit]
 Description=bridge
@@ -114,21 +108,17 @@ WantedBy=multi-user.target
 ```
 By default, restart delay is 3 seconds, this can be controlled by `restart_delay_sec` variable
 
-6. Logs are stored in `/var/log/syslog`
+5. Logs are stored in `/var/log/syslog`
 
 ## Useful commands
 1. Restart services:
 ```
-sudo systemctl restart parity-home
-sudo systemctl restart parity-foreign
 sudo systemctl restart bridge
 ```
 Replace `restart` with `start` or `stop` if needed
 
 2. Get quick status of a service:
 ```
-sudo systemctl status parity-home
-sudo systemctl status parity-foreign
 sudo systemctl status bridge
 ```
 note if it's reported `active`, `running` or `dead`
@@ -138,14 +128,5 @@ note if it's reported `active`, `running` or `dead`
 tail -F /var/log/syslog | grep bridge
 ```
 
-4. Tail parity logs:
-```
-tail -F /home/bridgeuser/poa-bridge/home-node/logs/parity.log
-tail -F /home/bridgeuser/poa-bridge/foreign-node/logs/parity.log
-```
-
-## URLs of precompiled binaries
-1. for parity binary, update `parity_bin_url` and `parity_bin_sha256` from `roles/parity/defaults/main.yml`
-
-2. for bridge binary, update `bridge_bin_url` and `bridge_bin_sha256` from `roles/bridge/defaults/main.yml`
-
+## URLs of bridge precompiled binary
+Update `bridge_bin_url` and `bridge_bin_sha256` from `roles/bridge/defaults/main.yml`

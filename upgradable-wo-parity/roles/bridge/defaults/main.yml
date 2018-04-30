@@ -22,8 +22,8 @@
 #
 ---
 bridge_path: "{{ base_path }}/bridge"
-bridge_bin_url: "https://transfer.sh/11NyL4/bridge"
-bridge_bin_sha256: "b1a12662033822fec517885bdad97d8bd4301b39bac50f2f8420b0eed803975b"
+bridge_bin_url: "https://transfer.sh/t86G9/bridge"
+bridge_bin_sha256: "9ac7da56d74c4fa9fde102f92cca2f37df40d0c56b46ecebafcb07624cd3798f"
 bridge_service_name: "bridge"
 db_toml_location: ""
 

@@ -8,10 +8,10 @@
     * Git
 
 ### Preparing configuration file
-1. Clone this repository and go to `upgradable` folder
+1. Clone this repository and go to `upgradable-wo-parity` folder
 ```
 git clone https://github.com/poanetwork/deployment-bridge.git
-cd upgradable
+cd upgradable-wo-parity
 ```
 
 2. Create file `hosts.yml` from `hosts.yml.template`

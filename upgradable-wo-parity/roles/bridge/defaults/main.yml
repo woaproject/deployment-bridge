@@ -4,7 +4,6 @@
 # bridge_bin_url                          (*) url from which to download bridge binary
 # bridge_bin_sha256                       (*) sha256 checksum of the binary
 # bridge_service_name                     (*) name to be used for bridge service
-# bridge_estimated_gas_cost_of_withdraw   bridge config option (used only in templates)
 # bridge_deposit_relay_gas                bridge config option (used only in templates)
 # bridge_withdraw_relay_gas               bridge config option (used only in templates)
 # bridge_withdraw_confirm_gas             bridge config option (used only in templates)
@@ -19,6 +18,10 @@
 # bridge_keystore_folder                  (*) folder to store keystore files
 # bridge_home_password_file               (*) name of the file with password
 # bridge_foreign_password_file            (*) name of the file with password
+# home_rpc_url                            url of home-side rpc endpoint
+# foreign_rpc_url                         url of foreign-sode rpc endpoint
+# home_rpc_port                           port of home-side rpc endpoint
+# foreign_rpc_port                        port of foreign-side rpc endpoint
 #
 ---
 bridge_path: "{{ base_path }}/bridge"
@@ -27,11 +30,16 @@ bridge_bin_sha256: "59405959eeb8b3095543b3e385b8cbb0bf0215a6fc1a40bce65ae9c71ede
 bridge_service_name: "bridge"
 db_toml_location: ""
 
-bridge_home_contract_bytecode: ""
-bridge_foreign_contract_bytecode: ""
+home_rpc_port: 443
+foreign_rpc_port: 443
 
-restart_delay_sec: 3
+restart_delay_sec: 2
 
 bridge_keystore_folder: "keys"
 bridge_home_password_file: "home-password.txt"
 bridge_foreign_password_file: "foreign-password.txt"
+
+bridge_home_poll_interval: 2
+bridge_home_request_timeout: 360
+bridge_foreign_poll_interval: 2
+bridge_foreign_request_timeout: 360

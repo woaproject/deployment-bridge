@@ -13,30 +13,36 @@
   notify:
     - restart {{ bridge_service_name }}
 
-- name: "Bridge - create file with home contract bytecode"
-  template:
-    src: "HomeBridge.bin.j2"
-    dest: "{{ bridge_path }}/HomeBridge.bin"
-
-- name: "Bridge - create file with foreign contract bytecode"
-  template:
-    src: "ForeignBridge.bin.j2"
-    dest: "{{ bridge_path }}/ForeignBridge.bin"
-
 - name: "Bridge - create keystore folder"
   file:
     path: "{{ bridge_path }}/{{ bridge_keystore_folder }}"
     state: directory
 
-- name: "Bridge - create keystore files"
+# - name: "Bridge - create keystore files"
+#   template:
+#     src: "{{ item }}.j2"
+#     dest: "{{ bridge_path }}/{{ bridge_keystore_folder }}/{{ item }}"
+#   with_items:
+#     - foreign-keystore.json
+#     - home-keystore.json
+#   notify:
+#     - restart bridge
+
+- name: "Bridge - create home keystore file"
   template:
-    src: "{{ item }}.j2"
-    dest: "{{ bridge_path }}/{{ bridge_keystore_folder }}/{{ item }}"
-  with_items:
-    - foreign-keystore.json
-    - home-keystore.json
+    src: "home-keystore.json.j2"
+    dest: "{{ bridge_path }}/{{ bridge_keystore_folder }}/home-keystore.json"
   notify:
     - restart bridge
+
+- name: "Bridge - create foreign keystore file"
+  template:
+    src: "foreign-keystore.json.j2"
+    dest: "{{ bridge_path }}/{{ bridge_keystore_folder }}/foreign-keystore.json"
+  notify:
+    - restart bridge
+  when: home_signer_address != foreign_signer_address
+
 
 - name: "Bridge - create password files"
   template:

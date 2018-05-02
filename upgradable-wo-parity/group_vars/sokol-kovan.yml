@@ -7,17 +7,12 @@ foreign_rpc_url: https://kovan.infura.io/mew
 foreign_rpc_port: 443
 
 ### bridge configs
-bridge_estimated_gas_cost_of_withdraw: 0
-bridge_home_deploy_gas: 3000000
-bridge_foreign_deploy_gas: 3000000
-bridge_deposit_relay_gas: 3000000
-bridge_withdraw_relay_gas: 3000000
+bridge_deposit_relay_gas:    3000000
+bridge_withdraw_relay_gas:   3000000
 bridge_withdraw_confirm_gas: 3000000
 
-bridge_home_deploy_gas_price: 1000000000
-bridge_foreign_deploy_gas_price: 1000000000
-bridge_deposit_relay_gas_price: 1000000000
-bridge_withdraw_relay_gas_price: 1000000000
+bridge_deposit_relay_gas_price:    1000000000
+bridge_withdraw_relay_gas_price:   1000000000
 bridge_withdraw_confirm_gas_price: 1000000000
 
 bridge_authorities:
@@ -27,11 +22,7 @@ bridge_authorities:
 bridge_authorities_requires_signatures: 1
 
 bridge_home_required_confirmations: 0
-bridge_home_poll_interval: 2
-bridge_home_request_timeout: 360
 bridge_foreign_required_confirmations: 0
-bridge_foreign_poll_interval: 2
-bridge_foreign_request_timeout: 360
 
 bridge_home_contract_address: "0x98f7b68C0Ef6A7DA0Bb0E786144A87bfEcc5cbD1"
 bridge_foreign_contract_address: "0x5c29759020Fa2251B6481A3Ac1Ee507Ddbdc075c"

@@ -3,6 +3,7 @@ sokol-kovan:
   hosts:
     192.0.2.1:
       ansible_user: ubuntu
+      service_user: bridgeuser
       ansible_python_interpreter: "/usr/bin/python3"
       home_signer_address: ""
       home_signer_keyfile: ''
@@ -11,3 +12,4 @@ sokol-kovan:
       foreign_signer_keyfile: ''
       foreign_signer_password: ""
       syslog_server_port: ""        # only if you want to forward syslog to a special server. format should be server:port
+      custom_ssh_port: ""

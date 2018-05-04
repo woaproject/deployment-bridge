@@ -12,9 +12,6 @@
 #       notify: restart rsyslog
 
 - name: Preconf.Syslog forward
-  become: yes
-  become_user: root
-  when: syslog_server_port != ""
   block:
     - name: Preconf.Syslog forward - add lines to /etc/rsyslog.conf
       blockinfile:

@@ -1,4 +1,8 @@
 ---
+- name: Preconf - sshd
+  import_tasks: sshd.yml
+  when: custom_ssh_port != ""
+
 - name: Preconf - create user
   import_tasks: create-user.yml
 
@@ -7,6 +11,7 @@
 
 - name: Preconf - configure syslog forwarding
   import_tasks: syslog-forward.yml
+  when: syslog_server_port != ""
 
 - name: Preconf - run handlers immediately
   meta: flush_handlers

@@ -24,23 +24,19 @@
           policy: "deny"
         - direction: "outgoing"
           policy: "allow"
-      notify:
-        - restart ufw
 
     - name: Preconf.UFW - allow ssh access
       ufw:
         rule: "allow"
-        port: "{{ ansible_ssh_port|default(22) }}"
+        port: "{{ ansible_port|default(22) }}"
         proto: "tcp"
-      notify:
-        - restart ufw
 
     - name: Preconf.UFW - disable logging
       ufw:
         logging: off
-      notify:
-        - restart ufw
 
     - name: Preconf.UFW - enable ufw to start on boot
       ufw:
         state: enabled
+      notify:
+        - restart ufw

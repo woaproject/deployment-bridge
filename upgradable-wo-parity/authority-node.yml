@@ -1,9 +1,6 @@
 ---
 - hosts: all
-  vars:
-    service_user: bridgeuser
+  become: yes
   roles:
     - authority-preconf
-    - role: bridge
-      become: yes
-      become_user: "{{ service_user }}"
+    - bridge

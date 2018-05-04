@@ -1,5 +1,4 @@
 keystore = "{{ bridge_keystore_folder }}"
-estimated_gas_cost_of_withdraw = {{ bridge_estimated_gas_cost_of_withdraw }}
 
 [home]
 account = "{{ home_signer_address }}"
@@ -10,9 +9,6 @@ rpc_host = "{{ home_rpc_url }}"
 rpc_port = {{ home_rpc_port }}
 password = "{{ bridge_home_password_file }}"
 
-[home.contract]
-bin = "HomeBridge.bin"
-
 [foreign]
 account = "{{ foreign_signer_address }}"
 required_confirmations = {{ bridge_foreign_required_confirmations }}
@@ -22,9 +18,6 @@ rpc_host = "{{ foreign_rpc_url }}"
 rpc_port = {{ foreign_rpc_port }}
 password = "{{ bridge_foreign_password_file }}"
 
-[foreign.contract]
-bin = "ForeignBridge.bin"
-
 [authorities]
 accounts = [
   "{{ bridge_authorities | join ('",\n  "') }}"
@@ -32,8 +25,6 @@ accounts = [
 required_signatures = {{ bridge_authorities_requires_signatures }}
 
 [transactions]
-home_deploy = { gas = {{ bridge_home_deploy_gas }}, gas_price = {{ bridge_home_deploy_gas_price }} }
-foreign_deploy = { gas = {{ bridge_foreign_deploy_gas }}, gas_price = {{ bridge_foreign_deploy_gas_price }} }
 deposit_relay = { gas = {{ bridge_deposit_relay_gas }}, gas_price = {{ bridge_deposit_relay_gas_price }} }
 withdraw_relay = { gas = {{ bridge_withdraw_relay_gas }}, gas_price = {{ bridge_withdraw_relay_gas_price }} }
 withdraw_confirm = { gas = {{ bridge_withdraw_confirm_gas }}, gas_price = {{ bridge_withdraw_confirm_gas_price }} }

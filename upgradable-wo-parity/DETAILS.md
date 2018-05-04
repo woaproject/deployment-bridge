@@ -13,19 +13,16 @@ Installation consists of 2 parts:
 
 4. Binaries and configuration files will be stored in the bridgeuser's home directory in `poa-bridge` folder, with the following structure:
 ```
-.
 poa-bridge/
-└── bridge
-    ├── bridge
+└── bridge/
+    ├── bridge*
     ├── config.toml
     ├── db.toml
-    ├── ForeignBridge.bin
     ├── foreign-password.txt
-    ├── HomeBridge.bin
     ├── home-password.txt
-    └── keys
-        ├── foreign-keystore.json
-        └── home-keystore.json
+    └── keys/
+       ├── foreign-keystore.json
+       └── home-keystore.json
 ```
 here `*` means executable file, `/` means folder. Parity binary is downloaded both to home-node folder and foreign-node folder in case different versions might be required.
 
@@ -35,7 +32,6 @@ here `*` means executable file, `/` means folder. Parity binary is downloaded bo
 2. Bridge `config.toml` is created based on `roles/bridge/templates/bridge.service.j2`, example:
 ```
 keystore = "keys"
-estimated_gas_cost_of_withdraw = 0
 
 [home]
 account = "0x006E27B6A72E1f34C626762F3C4761547Aff1421"
@@ -46,31 +42,24 @@ rpc_host = "https://sokol.poa.network"
 rpc_port = 443
 password = "home-password.txt"
 
-[home.contract]
-bin = "HomeBridge.bin"
-
 [foreign]
 account = "0x006E27B6A72E1f34C626762F3C4761547Aff1421"
 required_confirmations = 0
 poll_interval = 2
 request_timeout = 360
-rpc_host = "https://kovan.infura.io/metamask"
+rpc_host = "https://kovan.infura.io/mew"
 rpc_port = 443
 password = "foreign-password.txt"
 
-[foreign.contract]
-bin = "ForeignBridge.bin"
-
 [authorities]
 accounts = [
-  "0x006E27B6A72E1f34C626762F3C4761547Aff1421",
-  "0x006E27B6A72E1f34C626762F3C4761547Aff1421"
+  "0xe388c256c31ff953343ce81160b5ca9b564c1a32",
+  "0xbbefa45868cb8d6d445b78592175e4f1049570b0",
+  "0x2822e60af67f3713e696d80281e7e62fc6619dfe"
 ]
 required_signatures = 1
 
 [transactions]
-home_deploy = { gas = 3000000, gas_price = 1000000000 }
-foreign_deploy = { gas = 3000000, gas_price = 1000000000 }
 deposit_relay = { gas = 3000000, gas_price = 1000000000 }
 withdraw_relay = { gas = 3000000, gas_price = 1000000000 }
 withdraw_confirm = { gas = 3000000, gas_price = 1000000000 }
@@ -108,7 +97,7 @@ WantedBy=multi-user.target
 ```
 By default, restart delay is 3 seconds, this can be controlled by `restart_delay_sec` variable
 
-5. Logs are stored in `/var/log/syslog`
+5. Logs are stored in `/var/log/syslog`. If you provided `syslog_server_port` variable (in format `host:port`) in `hosts.yml` during installation, logs from syslog will be duplicated to a central syslog server for analysis and monitoring
 
 ## Useful commands
 1. Restart services:
@@ -126,6 +115,15 @@ note if it's reported `active`, `running` or `dead`
 3. Tail bridge logs from `/var/log/syslog`:
 ```
 tail -F /var/log/syslog | grep bridge
+```
+
+4. Relogin as bridge user (user without sudo access for running bridge):
+```
+sudo -i -u bridgeuser
+```
+to go back
+```
+exit
 ```
 
 ## URLs of bridge precompiled binary

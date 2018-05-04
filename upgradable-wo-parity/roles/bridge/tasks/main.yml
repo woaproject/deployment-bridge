@@ -3,7 +3,7 @@
   file:
     path: "{{ bridge_path }}"
     state: directory
-    mode: 0755
+    mode: 0500
     owner: "{{ service_user }}"
     group: "{{ service_user }}"
 
@@ -12,7 +12,7 @@
     url: "{{ bridge_bin_url }}"
     checksum: "sha256:{{ bridge_bin_sha256 }}"
     dest: "{{ bridge_path }}/bridge"
-    mode: "0755"
+    mode: "0500"
   notify:
     - restart {{ bridge_service_name }}
 
@@ -83,7 +83,7 @@
   template:
     src: "db.toml.j2"
     dest: "{{ bridge_path }}/db.toml"
-    mode: 0400
+    mode: 0600
     owner: "{{ service_user }}"
     group: "{{ service_user }}"
     force: no
@@ -96,7 +96,7 @@
     force: no
     owner: "{{ service_user }}"
     group: "{{ service_user }}"
-    mode: 0400
+    mode: 0600
   when: db_toml_location != ""
 
 - name: "Bridge - install bridge service"

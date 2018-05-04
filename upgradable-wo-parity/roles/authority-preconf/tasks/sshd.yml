@@ -1,10 +1,16 @@
 - name: Check if remote computer is listening standard ssh port
-  wait_for: port="22" state="started" host="{{ inventory_hostname }}" connect_timeout="5" timeout="10" delegate_to="localhost" ignore_errors="yes"
+  wait_for: port="22" state="started" host="{{ inventory_hostname }}" connect_timeout="3" timeout="4" 
+  delegate_to: "localhost" 
+  ignore_errors: "yes"
   register: port_used
 
 - name: Set inventory ansible_port to default
   set_fact: ansible_port="22"
-  when: port_used.state == "started"
+  when: port_used.state is defined
+  
+- name: Set inventory ansible_port to custom
+  set_fact: ansible_port="{{ custom_ssh_port }}"
+  when: port_used.state is undefined
 
 - name: Setup new SSH port
   lineinfile:
@@ -16,6 +22,3 @@
   
 - name: Preconf - run handlers immediately
   meta: flush_handlers
-
-- name: Change ansible port for
-  set_fact: ansible_port="{{ custom_ssh_port }}"

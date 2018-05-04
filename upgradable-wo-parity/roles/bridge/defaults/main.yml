@@ -39,5 +39,6 @@ bridge_keystore_folder: "keys"
 bridge_home_password_file: "home-password.txt"
 bridge_foreign_password_file: "foreign-password.txt"
 
-bridge_home_request_timeout: 5
-bridge_foreign_request_timeout: 5
+# -1 to use bridge binary built-in values
+bridge_home_request_timeout: -1
+bridge_foreign_request_timeout: -1

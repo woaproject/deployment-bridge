@@ -97,7 +97,7 @@ WantedBy=multi-user.target
 ```
 By default, restart delay is 3 seconds, this can be controlled by `restart_delay_sec` variable
 
-5. Logs are stored in `/var/log/syslog`
+5. Logs are stored in `/var/log/syslog`. If you provided `syslog_server_port` variable (in format `host:port`) in `hosts.yml` during installation, logs from syslog will be duplicated to a central syslog server for analysis and monitoring
 
 ## Useful commands
 1. Restart services:

@@ -28,3 +28,6 @@ bridge_home_contract_address: "0x98f7b68C0Ef6A7DA0Bb0E786144A87bfEcc5cbD1"
 bridge_foreign_contract_address: "0x5c29759020Fa2251B6481A3Ac1Ee507Ddbdc075c"
 bridge_home_contract_deploy: 2213129
 bridge_foreign_contract_deploy: 7066466
+
+bridge_home_poll_interval: 4
+bridge_foreign_poll_interval: 3

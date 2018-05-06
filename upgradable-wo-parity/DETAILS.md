@@ -49,11 +49,7 @@ rpc_port = 443
 password = "foreign-password.txt"
 
 [authorities]
-accounts = [
-  "0xe388c256c31ff953343ce81160b5ca9b564c1a32",
-  "0xbbefa45868cb8d6d445b78592175e4f1049570b0",
-  "0x2822e60af67f3713e696d80281e7e62fc6619dfe"
-]
+accounts = []
 required_signatures = 1
 
 [transactions]

@@ -23,9 +23,7 @@ rpc_port = {{ foreign_rpc_port }}
 password = "{{ bridge_foreign_password_file }}"
 
 [authorities]
-accounts = [
-  "{{ bridge_authorities | join ('",\n  "') }}"
-]
+accounts = []
 required_signatures = {{ bridge_authorities_requires_signatures }}
 
 [transactions]

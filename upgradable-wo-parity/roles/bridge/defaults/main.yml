@@ -42,3 +42,5 @@ bridge_foreign_password_file: "foreign-password.txt"
 # -1 to use bridge binary built-in values
 bridge_home_request_timeout: -1
 bridge_foreign_request_timeout: -1
+
+bridge_authorities: []

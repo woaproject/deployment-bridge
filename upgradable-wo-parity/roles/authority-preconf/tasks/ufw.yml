@@ -3,8 +3,6 @@
 
 ---
 - name: UFW
-  become: yes
-  become_user: root
   block:
     - name: Preconf.UFW - install ufw
       package:

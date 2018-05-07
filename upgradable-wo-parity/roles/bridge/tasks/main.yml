@@ -3,7 +3,7 @@
   file:
     path: "{{ bridge_path }}"
     state: directory
-    mode: 0500
+    mode: 0700
     owner: "{{ service_user }}"
     group: "{{ service_user }}"
 
@@ -12,7 +12,9 @@
     url: "{{ bridge_bin_url }}"
     checksum: "sha256:{{ bridge_bin_sha256 }}"
     dest: "{{ bridge_path }}/bridge"
-    mode: "0500"
+    mode: "0700"
+    owner: "{{ service_user }}"
+    group: "{{ service_user }}"
   notify:
     - restart {{ bridge_service_name }}
 
@@ -20,7 +22,7 @@
   file:
     path: "{{ bridge_path }}/{{ bridge_keystore_folder }}"
     state: directory
-    mode: 0500
+    mode: 0700
     owner: "{{ service_user }}"
     group: "{{ service_user }}"
 
@@ -38,7 +40,7 @@
   template:
     src: "home-keystore.json.j2"
     dest: "{{ bridge_path }}/{{ bridge_keystore_folder }}/home-keystore.json"
-    mode: 0400
+    mode: 0700
     owner: "{{ service_user }}"
     group: "{{ service_user }}"
   notify:
@@ -48,7 +50,7 @@
   template:
     src: "foreign-keystore.json.j2"
     dest: "{{ bridge_path }}/{{ bridge_keystore_folder }}/foreign-keystore.json"
-    mode: 0400
+    mode: 0700
     owner: "{{ service_user }}"
     group: "{{ service_user }}"
   notify:
@@ -60,7 +62,7 @@
   template:
     src: "{{ item }}.j2"
     dest: "{{ bridge_path }}/{{ item }}"
-    mode: 0400
+    mode: 0700
     owner: "{{ service_user }}"
     group: "{{ service_user }}"
   with_items:
@@ -73,7 +75,7 @@
   template:
     src: config.toml.j2
     dest: "{{ bridge_path }}/config.toml"
-    mode: 0400
+    mode: 0700
     owner: "{{ service_user }}"
     group: "{{ service_user }}"
   notify:
@@ -83,7 +85,7 @@
   template:
     src: "db.toml.j2"
     dest: "{{ bridge_path }}/db.toml"
-    mode: 0600
+    mode: 0700
     owner: "{{ service_user }}"
     group: "{{ service_user }}"
     force: no
@@ -96,7 +98,7 @@
     force: no
     owner: "{{ service_user }}"
     group: "{{ service_user }}"
-    mode: 0600
+    mode: 0700
   when: db_toml_location != ""
 
 - name: "Bridge - install bridge service"
@@ -105,7 +107,7 @@
     dest: /etc/systemd/system/{{ bridge_service_name }}.service
     owner: root
     group: root
-    mode: 0755
+    mode: 0644
   notify:
     - restart {{ bridge_service_name }}
 

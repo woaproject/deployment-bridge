@@ -3,13 +3,18 @@
   file:
     path: "{{ bridge_path }}"
     state: directory
+    mode: 0700
+    owner: "{{ service_user }}"
+    group: "{{ service_user }}"
 
 - name: "Bridge - download bridge binary"
   get_url:
     url: "{{ bridge_bin_url }}"
     checksum: "sha256:{{ bridge_bin_sha256 }}"
     dest: "{{ bridge_path }}/bridge"
-    mode: "0755"
+    mode: "0700"
+    owner: "{{ service_user }}"
+    group: "{{ service_user }}"
   notify:
     - restart {{ bridge_service_name }}
 
@@ -17,6 +22,9 @@
   file:
     path: "{{ bridge_path }}/{{ bridge_keystore_folder }}"
     state: directory
+    mode: 0700
+    owner: "{{ service_user }}"
+    group: "{{ service_user }}"
 
 # - name: "Bridge - create keystore files"
 #   template:
@@ -32,6 +40,9 @@
   template:
     src: "home-keystore.json.j2"
     dest: "{{ bridge_path }}/{{ bridge_keystore_folder }}/home-keystore.json"
+    mode: 0600
+    owner: "{{ service_user }}"
+    group: "{{ service_user }}"
   notify:
     - restart bridge
 
@@ -39,6 +50,9 @@
   template:
     src: "foreign-keystore.json.j2"
     dest: "{{ bridge_path }}/{{ bridge_keystore_folder }}/foreign-keystore.json"
+    mode: 0600
+    owner: "{{ service_user }}"
+    group: "{{ service_user }}"
   notify:
     - restart bridge
   when: home_signer_address != foreign_signer_address
@@ -48,6 +62,9 @@
   template:
     src: "{{ item }}.j2"
     dest: "{{ bridge_path }}/{{ item }}"
+    mode: 0600
+    owner: "{{ service_user }}"
+    group: "{{ service_user }}"
   with_items:
     - foreign-password.txt
     - home-password.txt
@@ -58,6 +75,9 @@
   template:
     src: config.toml.j2
     dest: "{{ bridge_path }}/config.toml"
+    mode: 0600
+    owner: "{{ service_user }}"
+    group: "{{ service_user }}"
   notify:
     - restart bridge
 
@@ -65,6 +85,9 @@
   template:
     src: "db.toml.j2"
     dest: "{{ bridge_path }}/db.toml"
+    mode: 0600
+    owner: "{{ service_user }}"
+    group: "{{ service_user }}"
     force: no
   when: db_toml_location == ""
 
@@ -75,27 +98,23 @@
     force: no
     owner: "{{ service_user }}"
     group: "{{ service_user }}"
+    mode: 0600
   when: db_toml_location != ""
 
 - name: "Bridge - install bridge service"
-  become: yes
-  become_user: root
   template:
     src: bridge.service.j2
     dest: /etc/systemd/system/{{ bridge_service_name }}.service
     owner: root
     group: root
+    mode: 0644
   notify:
     - restart {{ bridge_service_name }}
 
 - name: "Bridge - enable bridge service to start at boot"
-  become: yes
-  become_user: root
   command: "systemctl enable {{ bridge_service_name }}.service"
 
 - name: "Bridge - ensure bridge service is running"
-  become: yes
-  become_user: root
   systemd:
     name: "{{ bridge_service_name }}.service"
     state: started

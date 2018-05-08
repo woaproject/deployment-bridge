@@ -4,3 +4,4 @@
 #
 ---
 syslog_server_port: ""
+custom_ssh_port: ""

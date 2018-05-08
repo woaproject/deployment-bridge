@@ -1,5 +1,5 @@
 ---
-sokol-kovan:
+core-foundation:
   hosts:
     192.0.2.1:
       ansible_user: ubuntu
@@ -10,4 +10,4 @@ sokol-kovan:
       foreign_signer_address: ""
       foreign_signer_keyfile: ''
       foreign_signer_password: ""
-      syslog_server_port: ""        # only if you want to forward syslog to a special server. format should be server:port
+      syslog_server_port: ""        # this value should be provided to you

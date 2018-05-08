@@ -1,7 +1,0 @@
----
-- name: restart bridge
-  become: yes
-  become_user: root
-  service:
-    name: bridge
-    state: restarted

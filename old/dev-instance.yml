@@ -1,8 +1,0 @@
----
-- hosts: all
-  roles:
-    - parity-home
-    - parity-foreign
-    - bridge
-    - initial-deployment
-    - bridge-ui

@@ -1,7 +1,0 @@
----
-- name: restart parity-home
-  become: yes
-  become_user: root
-  service:
-    name: parity-home
-    state: restarted

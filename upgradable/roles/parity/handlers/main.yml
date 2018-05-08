@@ -1,7 +1,0 @@
----
-- name: "restart {{ service_name }}"
-  become: yes
-  become_user: root
-  service:
-    name: "{{ service_name }}"
-    state: restarted

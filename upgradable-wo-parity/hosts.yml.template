@@ -11,4 +11,3 @@ sokol-kovan:
       foreign_signer_keyfile: ''
       foreign_signer_password: ""
       syslog_server_port: ""        # only if you want to forward syslog to a special server. format should be server:port
-      custom_ssh_port: ""

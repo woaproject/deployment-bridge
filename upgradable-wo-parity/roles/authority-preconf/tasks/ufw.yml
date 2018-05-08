@@ -28,6 +28,13 @@
         rule: "allow"
         port: "{{ ansible_port | default(22) }}"
         proto: "tcp"
+    
+    - name: Preconf.UFW - allow custom port access
+      ufw:
+        rule: "allow"
+        port: "{{ custom_ssh_port }}"
+        proto: "tcp"
+      when: custom_ssh_port!="" and  custom_ssh_port!=(ansible_port|default(22))
 
     - name: Preconf.UFW - disable logging
       ufw:

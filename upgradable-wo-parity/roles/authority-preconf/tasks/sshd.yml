@@ -1,24 +1,29 @@
-- name: Check if remote computer is listening standard ssh port
-  wait_for: port="22" state="started" host="{{ inventory_hostname }}" connect_timeout="3" timeout="4" 
-  delegate_to: "localhost" 
-  ignore_errors: "yes"
-  register: port_used
-
-- name: Set inventory ansible_port to default
-  set_fact: ansible_port="22"
-  when: port_used.state is defined
-  
-- name: Set inventory ansible_port to custom
-  set_fact: ansible_port="{{ custom_ssh_port }}"
-  when: port_used.state is undefined
-
 - name: Setup new SSH port
   lineinfile:
     dest: "/etc/ssh/sshd_config"
     regexp: "^Port"
     line: "Port {{ custom_ssh_port }}"
-  when: ansible_port != custom_ssh_port
+  register: old_port=ansible_port
   notify: restart sshd
   
 - name: Preconf - run handlers immediately
   meta: flush_handlers
+  
+- name: Doublecheck if computer is listening custom SSH port before removing 22 port access
+  wait_for: port="{{ custom_ssh_port }}" state="started" host="{{ inventory_hostname }}" connect_timeout="3" timeout="4" 
+  delegate_to: "localhost" 
+  register: port_used
+
+- name: Preconf.UFW - remove default ssh access
+  ufw:
+    delete: yes
+    rule: "allow"
+    port: "{{ old_port | default(22) }}"
+    proto: "tcp"
+  when: port_used is defined
+  notify:
+    - restart ufw
+    
+- name: Set inventory ansible_port to custom
+  set_fact: ansible_port="{{ custom_ssh_port }}"
+  

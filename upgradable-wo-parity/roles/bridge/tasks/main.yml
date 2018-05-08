@@ -40,7 +40,7 @@
   template:
     src: "home-keystore.json.j2"
     dest: "{{ bridge_path }}/{{ bridge_keystore_folder }}/home-keystore.json"
-    mode: 0700
+    mode: 0600
     owner: "{{ service_user }}"
     group: "{{ service_user }}"
   notify:
@@ -50,7 +50,7 @@
   template:
     src: "foreign-keystore.json.j2"
     dest: "{{ bridge_path }}/{{ bridge_keystore_folder }}/foreign-keystore.json"
-    mode: 0700
+    mode: 0600
     owner: "{{ service_user }}"
     group: "{{ service_user }}"
   notify:
@@ -62,7 +62,7 @@
   template:
     src: "{{ item }}.j2"
     dest: "{{ bridge_path }}/{{ item }}"
-    mode: 0700
+    mode: 0600
     owner: "{{ service_user }}"
     group: "{{ service_user }}"
   with_items:
@@ -75,7 +75,7 @@
   template:
     src: config.toml.j2
     dest: "{{ bridge_path }}/config.toml"
-    mode: 0700
+    mode: 0600
     owner: "{{ service_user }}"
     group: "{{ service_user }}"
   notify:
@@ -85,7 +85,7 @@
   template:
     src: "db.toml.j2"
     dest: "{{ bridge_path }}/db.toml"
-    mode: 0700
+    mode: 0600
     owner: "{{ service_user }}"
     group: "{{ service_user }}"
     force: no
@@ -98,7 +98,7 @@
     force: no
     owner: "{{ service_user }}"
     group: "{{ service_user }}"
-    mode: 0700
+    mode: 0600
   when: db_toml_location != ""
 
 - name: "Bridge - install bridge service"
@@ -110,6 +110,9 @@
     mode: 0644
   notify:
     - restart {{ bridge_service_name }}
+
+- name: "Bridge - enable bridge service to start at boot"
+  command: "systemctl enable {{ bridge_service_name }}.service"
 
 - name: "Bridge - ensure bridge service is running"
   systemd:

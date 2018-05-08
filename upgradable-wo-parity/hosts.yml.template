@@ -3,7 +3,6 @@ sokol-kovan:
   hosts:
     192.0.2.1:
       ansible_user: ubuntu
-      service_user: bridgeuser
       ansible_python_interpreter: "/usr/bin/python3"
       home_signer_address: ""
       home_signer_keyfile: ''

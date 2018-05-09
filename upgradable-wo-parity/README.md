@@ -24,12 +24,8 @@ This file contains parameters specific to your node, so you need to edit it and 
 * `192.0.2.1` - replace with your node's IP address
 * `ansible_user` - user to ssh into your node. Usually it's either `ubuntu` or `root`
 * `ansible_python_interpreter` - path to python interpreter on your node. With Ubuntu 16.04 this should work with default value, however if running the playbook you get an error that `python3` is not found, try changing this to `/usr/bin/python`
-* `home_signer_address` - set this to address (`"0x..."`) of the authority on the home side of the bridge
-* `home_signer_keyfile` - copy json content (`'{...}'`) of authority's keystore file
-* `home_signer_password` - set this to authority's password
-* `foreign_signer_address` - set this to address (`"0x..."`) of the authority on the foreign side of the bridge
-* `foreign_signer_keyfile` - copy json content (`'{...}'`) of authority's keystore file
-* `foreign_signer_password` - set this to authority's password
+* `signer_keyfile` - copy json content (`'{...}'`) of authority's keystore file
+* `signer_password` - set this to authority's password
 * `syslog_server_port` - set this to `server:port` of syslog server (should be provided to you)
 
 ### Installing the node

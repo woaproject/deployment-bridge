@@ -8,7 +8,7 @@ Installation consists of 2 parts:
 
 2. UFW is configured to allow inbound tcp connections only on ssh port (`22` by default)
 
-3. Syslog forwarding to remote server is setup by editing `/etc/rsyslog.conf` file. This is done only if `syslog_server_port` is not empty
+3. Syslog forwarding to remote server is setup by placing a config file in `/etc/rsyslog.d/tls-client.conf` file. This is done only if `syslog_server_port` is not empty
 
 4. Binaries and configuration files will be stored in the bridgeuser's home directory in `poa-bridge` folder, with the following structure:
 ```
@@ -17,10 +17,8 @@ poa-bridge/
     ├── bridge*
     ├── config.toml
     ├── db.toml
-    ├── foreign-password.txt
-    ├── home-password.txt
+    ├── password.txt
     └── keys/
-       ├── foreign-keystore.json
        └── home-keystore.json
 ```
 here `*` means executable file, `/` means folder. Parity binary is downloaded both to home-node folder and foreign-node folder in case different versions might be required.
@@ -38,7 +36,7 @@ required_confirmations = 0
 poll_interval = 2
 rpc_host = "https://sokol.poa.network"
 rpc_port = 443
-password = "home-password.txt"
+password = "password.txt"
 
 [foreign]
 account = "0x006E27B6A72E1f34C626762F3C4761547Aff1421"
@@ -46,7 +44,7 @@ required_confirmations = 0
 poll_interval = 2
 rpc_host = "https://kovan.infura.io/mew"
 rpc_port = 443
-password = "foreign-password.txt"
+password = "password.txt"
 
 [authorities]
 accounts = []

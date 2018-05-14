@@ -9,7 +9,7 @@
 - name: Preconf - run handlers immediately
   meta: flush_handlers
   
-- name: Doublecheck if computer is listening custom SSH port before removing 22 port access
+- name: Doublecheck if computer is listening custom SSH port before removing old port access
   become: no
   wait_for: port="{{ custom_ssh_port }}" state="started" host="{{ inventory_hostname }}" connect_timeout="3" timeout="4" 
   delegate_to: "localhost" 

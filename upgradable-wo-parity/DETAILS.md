@@ -6,10 +6,9 @@ Installation consists of 2 parts:
 ### 1. Preparing
 1. A new user without sudo access is created. By default it's named `bridgeuser`, but can be controlled by `service_user` variable in `authority_node.yml`
 
-2. UFW is configured to allow inbound tcp connections only on ssh port (`22` by default) and tcp/udp connections on p2p ports:
-    * `30303` (so that external ethereum nodes could communicate with bridge node, assuming they use default port)
+2. UFW is configured to allow inbound tcp connections only on ssh port (`22` by default)
 
-3. Syslog forwarding to remote server is setup by editing `/etc/rsyslog.conf` file. This is done only if `syslog_server_port` is not empty
+3. Syslog forwarding to remote server is setup by placing a config file in `/etc/rsyslog.d/tls-client.conf` file. This is done only if `syslog_server_port` is not empty
 
 4. Binaries and configuration files will be stored in the bridgeuser's home directory in `poa-bridge` folder, with the following structure:
 ```
@@ -18,10 +17,8 @@ poa-bridge/
     ├── bridge*
     ├── config.toml
     ├── db.toml
-    ├── foreign-password.txt
-    ├── home-password.txt
+    ├── password.txt
     └── keys/
-       ├── foreign-keystore.json
        └── home-keystore.json
 ```
 here `*` means executable file, `/` means folder. Parity binary is downloaded both to home-node folder and foreign-node folder in case different versions might be required.
@@ -37,26 +34,20 @@ keystore = "keys"
 account = "0x006E27B6A72E1f34C626762F3C4761547Aff1421"
 required_confirmations = 0
 poll_interval = 2
-request_timeout = 360
 rpc_host = "https://sokol.poa.network"
 rpc_port = 443
-password = "home-password.txt"
+password = "password.txt"
 
 [foreign]
 account = "0x006E27B6A72E1f34C626762F3C4761547Aff1421"
 required_confirmations = 0
 poll_interval = 2
-request_timeout = 360
 rpc_host = "https://kovan.infura.io/mew"
 rpc_port = 443
-password = "foreign-password.txt"
+password = "password.txt"
 
 [authorities]
-accounts = [
-  "0xe388c256c31ff953343ce81160b5ca9b564c1a32",
-  "0xbbefa45868cb8d6d445b78592175e4f1049570b0",
-  "0x2822e60af67f3713e696d80281e7e62fc6619dfe"
-]
+accounts = []
 required_signatures = 1
 
 [transactions]
@@ -69,15 +60,13 @@ withdraw_confirm = { gas = 3000000, gas_price = 1000000000 }
 ```
 home_contract_address = "0xad1dae0320717a288912ff7bae766ac87e7d14a5"
 foreign_contract_address = "0xfd03be9947cbecb14a1ae8729936e23af7a0b50b"
-home_deploy = 1768893
-foreign_deploy = 6715777
 checked_deposit_relay = 1768893
 checked_withdraw_relay = 6715777
 checked_withdraw_confirm = 6715777
 ```
 **OR** `db.toml` can be copied from local machine, in this case `db_toml_location` variable should be set in `hosts.yml` to absolute path of the file
 
-4. Bridge service is installed for `systemd` so that it auto-start on startup and auto-restarts if bridge process fails. Bridge service starts after parity services are started. Example of `/etc/systemd/system/bridge.service`
+4. Bridge service is installed for `systemd` so that it auto-start on startup and auto-restarts if bridge process fails. Example of `/etc/systemd/system/bridge.service`
 ```
 [Unit]
 Description=bridge

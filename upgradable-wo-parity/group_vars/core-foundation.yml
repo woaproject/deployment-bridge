@@ -1,0 +1,29 @@
+### home side rpc
+home_rpc_url: https://core.poa.network
+home_rpc_port: 443
+
+### foreign side rpc
+foreign_rpc_url: https://bridge-mainnet-rpc.poa.net
+foreign_rpc_port: 443
+
+### bridge configs
+bridge_deposit_relay_gas:    3000000
+bridge_withdraw_relay_gas:   3000000
+bridge_withdraw_confirm_gas: 3000000
+
+bridge_deposit_relay_gas_price:    21000000000
+bridge_withdraw_relay_gas_price:    1000000000
+bridge_withdraw_confirm_gas_price: 21000000000
+
+bridge_authorities_requires_signatures: 2
+
+bridge_home_required_confirmations: 8
+bridge_foreign_required_confirmations: 8
+
+bridge_home_contract_address: "0xB87b6077D59B01Ab9fa8cd5A1A21D02a4d60D358"
+bridge_foreign_contract_address: "0xd819E948b14cA6AAD2b7Ffd333cCDf732b129EeD"
+bridge_home_contract_deploy: 2477327
+bridge_foreign_contract_deploy: 5578725
+
+bridge_home_poll_interval: 4
+bridge_foreign_poll_interval: 10

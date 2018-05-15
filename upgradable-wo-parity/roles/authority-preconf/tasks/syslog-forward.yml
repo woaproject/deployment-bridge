@@ -1,34 +1,27 @@
 ---
-# - name: Preconf.Syslog forward
-#   become: yes
-#   become_user: root
-#   when: syslog_server_port != ""
-#   block:
-#     - name: Preconf.Syslog forward - add line to /etc/rsyslog.conf
-#       lineinfile:
-#         path: /etc/rsyslog.conf
-#         insertbefore: '^\$IncludeConfig'
-#         line: "*.* @@{{ syslog_server_port }}"
-#       notify: restart rsyslog
+- name: Preconf.Syslog forward - apt install rsyslog-gnutls package
+  apt:
+    name: rsyslog-gnutls
+    state: present
+    update_cache: yes
 
-- name: Preconf.Syslog forward
-  block:
-    - name: Preconf.Syslog forward - add lines to /etc/rsyslog.conf
-      blockinfile:
-        path: /etc/rsyslog.conf
-        insertbefore: '^\$IncludeConfig'
-        content: |
-          $ActionResumeInterval 10
-          $ActionQueueSize 100000
-          $ActionQueueDiscardMark 97500
-          $ActionQueueHighWaterMark 80000
-          $ActionQueueType LinkedList
-          $ActionQueueFileName syslogqueue
-          $ActionQueueCheckpointInterval 100
-          $ActionQueueMaxDiskSpace 2g
-          $ActionResumeRetryCount -1
-          $ActionQueueSaveOnShutdown on
-          $ActionQueueTimeoutEnqueue 2
-          $ActionQueueDiscardSeverity 0
-          *.* @@{{ syslog_server_port }}
-      notify: restart rsyslog
+- name: Preconf.Syslog forward - download papertrail CA
+  get_url:
+    url: "https://papertrailapp.com/tools/papertrail-bundle.pem"
+    checksum: "md5:ba3b40a34ec33ac0869fa5b17a0c80fc"
+    dest: "/etc/papertrail-bundle.pem"
+    mode: 0644
+    owner: root
+    group: root
+  notify:
+    - restart rsyslog
+
+- name: Preconf.Syslog forward - create client config
+  template:
+    src: "rsyslog-tls-client.conf.j2"
+    dest: "/etc/rsyslog.d/tls-client.conf"
+    mode: 0644
+    owner: root
+    group: root
+  notify:
+    - restart rsyslog

@@ -1,9 +1,12 @@
+- name: Save old SSH port to variable
+  set_fact:
+    old_port: "{{ ansible_port }}"
+
 - name: Setup new SSH port
   lineinfile:
     dest: "/etc/ssh/sshd_config"
     regexp: "^Port"
     line: "Port {{ custom_ssh_port }}"
-  register: old_port=ansible_port
   notify: restart sshd
   
 - name: Preconf - run handlers immediately

@@ -1,15 +1,15 @@
 ---
-- name: Check if remote computer is listening standard ssh port
+- name: Check if remote computer is listening on standard ssh port
   become: no
-  wait_for: port="{{ ansible_port | default(22) }}" state="started" host="{{ inventory_hostname }}" connect_timeout="3" timeout="4" 
-  delegate_to: "localhost" 
+  wait_for: port="{{ ansible_port | default(22) }}" state="started" host="{{ inventory_hostname }}" connect_timeout="3" timeout="4"
+  delegate_to: "localhost"
   ignore_errors: "yes"
   register: port_used
 
 - name: Set inventory ansible_port to custom
   set_fact: ansible_port="{{ custom_ssh_port }}"
   when: port_used.state is undefined
-  
+
 - name: Preconf - setup UFW firewall
   import_tasks: ufw.yml
 

@@ -4,7 +4,9 @@ keystore = "{{ bridge_keystore_folder }}"
 account = "{{ home_signer_address }}"
 required_confirmations = {{ bridge_home_required_confirmations }}
 poll_interval = {{ bridge_home_poll_interval }}
+{% if bridge_home_request_timeout > -1 %}
 request_timeout = {{ bridge_home_request_timeout }}
+{% endif %}
 rpc_host = "{{ home_rpc_url }}"
 rpc_port = {{ home_rpc_port }}
 password = "{{ bridge_home_password_file }}"
@@ -13,15 +15,15 @@ password = "{{ bridge_home_password_file }}"
 account = "{{ foreign_signer_address }}"
 required_confirmations = {{ bridge_foreign_required_confirmations }}
 poll_interval = {{ bridge_foreign_poll_interval }}
+{% if bridge_foreign_request_timeout > -1 %}
 request_timeout = {{ bridge_foreign_request_timeout }}
+{% endif %}
 rpc_host = "{{ foreign_rpc_url }}"
 rpc_port = {{ foreign_rpc_port }}
 password = "{{ bridge_foreign_password_file }}"
 
 [authorities]
-accounts = [
-  "{{ bridge_authorities | join ('",\n  "') }}"
-]
+accounts = []
 required_signatures = {{ bridge_authorities_requires_signatures }}
 
 [transactions]

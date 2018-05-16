@@ -25,8 +25,8 @@
 #
 ---
 bridge_path: "{{ base_path }}/bridge"
-bridge_bin_url: "https://s3.amazonaws.com/poa-bridge-iterim/commit-67c59b6ae6399f2ab823903a81e1d26ea79544ca/bridge"
-bridge_bin_sha256: "59405959eeb8b3095543b3e385b8cbb0bf0215a6fc1a40bce65ae9c71ede5680"
+bridge_bin_url: "https://s3.amazonaws.com/poa-bridge-iterim/release-v0.2.0/bridge"
+bridge_bin_sha256: "22be3064b3b344ff00b8f8d9312957b2c568c0bba3c692f98fd90e3cf46b5036"
 bridge_service_name: "bridge"
 db_toml_location: ""
 
@@ -39,5 +39,8 @@ bridge_keystore_folder: "keys"
 bridge_home_password_file: "home-password.txt"
 bridge_foreign_password_file: "foreign-password.txt"
 
-bridge_home_request_timeout: 5
-bridge_foreign_request_timeout: 5
+# -1 to use bridge binary built-in values
+bridge_home_request_timeout: 360
+bridge_foreign_request_timeout: 360
+
+bridge_authorities: []

@@ -1,7 +1,0 @@
----
-- name: restart parity-foreign
-  become: yes
-  become_user: root
-  service:
-    name: parity-foreign
-    state: restarted

@@ -33,6 +33,13 @@ bridge_foreign_contract_deploy: 7066466
 
 bridge_home_poll_interval: 4
 bridge_foreign_poll_interval: 3
+
+bridge_home_default_gas_price: 1000000000
+
+bridge_foreign_gas_price_oracle_url: https://gasprice.poa.network
+bridge_foreign_gas_price_timeout: 10
+bridge_foreign_gas_price_speed_type: fast
+bridge_foreign_default_gas_price: 21000000000
 ```
 
 Let's examine available options:

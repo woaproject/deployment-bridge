@@ -25,8 +25,8 @@
 #
 ---
 bridge_path: "{{ base_path }}/bridge"
-bridge_bin_url: "https://s3.amazonaws.com/poa-bridge-iterim/release-v0.2.0/bridge"
-bridge_bin_sha256: "22be3064b3b344ff00b8f8d9312957b2c568c0bba3c692f98fd90e3cf46b5036"
+bridge_bin_url: "https://s3.amazonaws.com/poa-bridge-iterim/commit-863b92ad2ce2a45cca46e1b4e7230123af1b9867/bridge"
+bridge_bin_sha256: "af0bb27a95808e2d44f20e77b9b3af89e67e243fb9153a3ffdca7d6bd5481f37"
 bridge_service_name: "bridge"
 db_toml_location: ""
 
@@ -39,8 +39,26 @@ bridge_keystore_folder: "keys"
 bridge_home_password_file: "home-password.txt"
 bridge_foreign_password_file: "foreign-password.txt"
 
-# -1 to use bridge binary built-in values
+# set to -1 to use bridge binary default values
 bridge_home_request_timeout: 360
 bridge_foreign_request_timeout: 360
 
 bridge_authorities: []
+
+# set to empty string to use default value
+bridge_home_gas_price_oracle_url: ""
+# set to -1 to use default value
+bridge_home_gas_price_timeout: -1
+# set to empty string to use default value
+bridge_home_gas_price_speed_type: ""
+# set to -1 to use default value
+bridge_home_default_gas_price: -1
+
+# set to empty string to use default value
+bridge_foreign_gas_price_oracle_url: ""
+# set to -1 to use default value
+bridge_foreign_gas_price_timeout: -1
+# set to empty string to use default value
+bridge_foreign_gas_price_speed_type: ""
+# set to -1 to use default value
+bridge_foreign_default_gas_price: -1

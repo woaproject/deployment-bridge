@@ -25,8 +25,8 @@
 #
 ---
 bridge_path: "{{ base_path }}/bridge"
-bridge_bin_url: "https://s3.amazonaws.com/poa-bridge-iterim/commit-863b92ad2ce2a45cca46e1b4e7230123af1b9867/bridge"
-bridge_bin_sha256: "af0bb27a95808e2d44f20e77b9b3af89e67e243fb9153a3ffdca7d6bd5481f37"
+bridge_bin_url: "https://s3.amazonaws.com/poa-bridge-iterim/commit-6cb2c5689acff585844e7bce93e4f5f510d48098/bridge"
+bridge_bin_sha256: "aa4c4b8c8966b39e16bff2bbed92df46ef812b5e2e3f795c7264a8445cec586b"
 bridge_service_name: "bridge"
 db_toml_location: ""
 

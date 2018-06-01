@@ -7,8 +7,8 @@ foreign_rpc_url: https://bridge-mainnet-rpc.poa.net
 foreign_rpc_port: 443
 
 ### bridge configs
-bridge_deposit_relay_gas:    300000
-bridge_withdraw_relay_gas:   300000
+bridge_deposit_relay_gas:    150000
+bridge_withdraw_relay_gas:   100000
 bridge_withdraw_confirm_gas: 300000
 
 bridge_deposit_relay_gas_price:    21000000000

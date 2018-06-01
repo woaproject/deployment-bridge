@@ -16,8 +16,8 @@ gas_price_oracle_url = "{{ bridge_home_gas_price_oracle_url }}"
 {% if bridge_home_gas_price_timeout > -1 %}
 gas_price_timeout = {{ bridge_home_gas_price_timeout }}
 {% endif %}
-{% if bridge_home_gas_price_speed_type != "" %}
-gas_price_speed_type = "{{ bridge_home_gas_price_speed_type }}"
+{% if bridge_home_gas_price_speed != "" %}
+gas_price_speed = "{{ bridge_home_gas_price_speed }}"
 {% endif %}
 {% endif %}
 {% if bridge_home_default_gas_price > -1 %}
@@ -40,8 +40,8 @@ gas_price_oracle_url = "{{ bridge_foreign_gas_price_oracle_url }}"
 {% if bridge_foreign_gas_price_timeout > -1 %}
 gas_price_timeout = {{ bridge_foreign_gas_price_timeout }}
 {% endif %}
-{% if bridge_foreign_gas_price_speed_type != "" %}
-gas_price_speed_type = "{{ bridge_foreign_gas_price_speed_type }}"
+{% if bridge_foreign_gas_price_speed != "" %}
+gas_price_speed = "{{ bridge_foreign_gas_price_speed }}"
 {% endif %}
 {% endif %}
 {% if bridge_foreign_default_gas_price > -1 %}

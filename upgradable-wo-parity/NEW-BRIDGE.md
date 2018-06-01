@@ -38,7 +38,7 @@ bridge_home_default_gas_price: 1000000000
 
 bridge_foreign_gas_price_oracle_url: https://gasprice.poa.network
 bridge_foreign_gas_price_timeout: 10
-bridge_foreign_gas_price_speed_type: fast
+bridge_foreign_gas_price_speed: fast #other possible values: slow, standard, instant
 bridge_foreign_default_gas_price: 21000000000
 ```
 

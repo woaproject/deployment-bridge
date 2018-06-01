@@ -50,7 +50,7 @@ bridge_home_gas_price_oracle_url: ""
 # set to -1 to use default value
 bridge_home_gas_price_timeout: -1
 # set to empty string to use default value
-bridge_home_gas_price_speed_type: ""
+bridge_home_gas_price_speed: ""
 # set to -1 to use default value
 bridge_home_default_gas_price: -1
 
@@ -59,6 +59,6 @@ bridge_foreign_gas_price_oracle_url: ""
 # set to -1 to use default value
 bridge_foreign_gas_price_timeout: -1
 # set to empty string to use default value
-bridge_foreign_gas_price_speed_type: ""
+bridge_foreign_gas_price_speed: ""
 # set to -1 to use default value
 bridge_foreign_default_gas_price: -1

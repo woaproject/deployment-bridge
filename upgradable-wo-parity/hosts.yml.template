@@ -7,3 +7,7 @@ core-foundation:
       signer_keyfile: ''
       signer_password: ""
       syslog_server_port: ""        # this value should be provided to you
+
+      # last_checked_deposit_relay: 1       # optional value, consult README
+      # last_checked_withdraw_relay: 1      # optional value, consult README
+      # last_checked_withdraw_confirm: 1    # optional value, consult README

@@ -28,6 +28,12 @@ This file contains parameters specific to your node, so you need to edit it and 
 * `signer_password` - set this to authority's password
 * `syslog_server_port` - set this to `server:port` of syslog server (should be provided to you)
 
+If you're a new validator joining an existing bridge setup, you may want to additionally set the following parametrs in `hosts.yml`:
+* `last_checked_deposit_relay`
+* `last_checked_withdraw_relay`
+* `last_checked_withdraw_confirm`
+If set, these values overwrite initial block numbers in `db.toml`, so that your node won't be re-processing transactions that are already processed by existing validators. You should get exact values from other validators before running the playbook.
+
 ### Installing the node
 1. If ssh user can't execute `sudo` without password, you will need to add `--ask-become-pass` option below (without `[]` brackets) and provide sudo password when prompted by the playbook.
 2. Run the playbook

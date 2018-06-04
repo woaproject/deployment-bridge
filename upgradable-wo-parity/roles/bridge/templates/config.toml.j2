@@ -53,6 +53,6 @@ accounts = []
 required_signatures = {{ bridge_authorities_requires_signatures }}
 
 [transactions]
-deposit_relay = { gas = {{ bridge_deposit_relay_gas }}, gas_price = {{ bridge_deposit_relay_gas_price }} }
-withdraw_relay = { gas = {{ bridge_withdraw_relay_gas }}, gas_price = {{ bridge_withdraw_relay_gas_price }} }
-withdraw_confirm = { gas = {{ bridge_withdraw_confirm_gas }}, gas_price = {{ bridge_withdraw_confirm_gas_price }} }
+deposit_relay = { gas = {{ bridge_deposit_relay_gas }} }
+withdraw_relay = { gas = {{ bridge_withdraw_relay_gas }} }
+withdraw_confirm = { gas = {{ bridge_withdraw_confirm_gas }} }

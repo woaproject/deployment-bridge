@@ -26,7 +26,7 @@
 ---
 bridge_path: "{{ base_path }}/bridge"
 bridge_bin_url: "https://s3.amazonaws.com/poa-bridge-iterim/release-v0.3.0/bridge"
-bridge_bin_sha256: "7e1909230644a8c19b1e8c2a4c9ef542e9dfca91014762d8312ab4db881380ed"
+bridge_bin_sha256: "4cfbba6f00fe6bbbd002b71ab4610c4bca06931496ee18fdbfd124d823b88bcb"
 bridge_service_name: "bridge"
 db_toml_location: ""
 

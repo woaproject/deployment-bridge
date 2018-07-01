@@ -20,7 +20,7 @@ cd upgradable-wo-parity
 cp hosts.yml.template hosts.yml
 ```
 This file contains parameters specific to your node, so you need to edit it and replace/provide missing values. Let's review the parameters:
-* `sokol-kovan` - name of the bridge you want to deploy. Unless deploying a custom bridge, you don't need to change this line
+* `core-foundation` - name of the bridge you want to deploy. Unless deploying a custom bridge, you don't need to change this line
 * `192.0.2.1` - replace with your node's IP address
 * `ansible_user` - user to ssh into your node. Usually it's either `ubuntu` or `root`
 * `ansible_python_interpreter` - path to python interpreter on your node. With Ubuntu 16.04 this should work with default value, however if running the playbook you get an error that `python3` is not found, try changing this to `/usr/bin/python`

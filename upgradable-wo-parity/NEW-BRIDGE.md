@@ -21,8 +21,6 @@ bridge_deposit_relay_gas_price:    1000000000
 bridge_withdraw_relay_gas_price:   1000000000
 bridge_withdraw_confirm_gas_price: 1000000000
 
-bridge_authorities_requires_signatures: 1
-
 bridge_home_required_confirmations: 0
 bridge_foreign_required_confirmations: 0
 

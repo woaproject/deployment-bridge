@@ -11,8 +11,6 @@ bridge_deposit_relay_gas:    250000
 bridge_withdraw_relay_gas:   300000
 bridge_withdraw_confirm_gas: 300000
 
-bridge_authorities_requires_signatures: 2
-
 bridge_home_required_confirmations: 8
 bridge_foreign_required_confirmations: 8
 

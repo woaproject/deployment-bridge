@@ -42,3 +42,12 @@ Useful arguments:
 
 `-i <file>` - use specified file as a `hosts.yml` file.
 
+`-e "<variable>=<value>"` - override default variable.
+
+Useful variables:
+
+`bridge_path` - absolute or relative (to user home folder) path where bridge will be installed.
+
+`bridge_repo` - path to bridge repo.
+
+`docker_compose_version` - specify a version of docker-compose to be installed

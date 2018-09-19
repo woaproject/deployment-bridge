@@ -1,0 +1,13 @@
+- name: Get blocks
+  shell: docker-compose run bridge node scripts/getValidatorStartBlocks.js
+  args:
+    chdir: "{{ bridge_path }}"
+  register: BLOCKS
+
+- name: Write blocks
+  blockinfile:
+    path: "{{ bridge_path }}/.env"
+    marker: "## {mark} Calculated by scripts/getValidatorStartBlocks.js"
+    block: |
+      HOME_START_BLOCK={{ (BLOCKS.stdout | from_json).homeStartBlock }}
+      FOREIGN_START_BLOCK={{ (BLOCKS.stdout | from_json).foreignStartBlock }}

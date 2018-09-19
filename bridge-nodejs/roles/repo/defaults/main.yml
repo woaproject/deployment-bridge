@@ -1,0 +1,2 @@
+bridge_path: ./bridge
+bridge_repo: https://github.com/poanetwork/bridge-nodejs.git

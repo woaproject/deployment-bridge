@@ -1,0 +1,5 @@
+- name: Get bridge repo
+  git:
+    repo: "{{ bridge_repo }}"
+    dest: "{{ bridge_path }}"
+    force: yes

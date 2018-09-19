@@ -1,0 +1,19 @@
+- name: Install python if necessary
+  hosts: all
+  gather_facts: false
+  become: true
+  tasks:
+    - name: Install python
+      raw: "test -e {{ ansible_python_interpreter | default ('/usr/bin/python') }} || (sudo apt -y update && sudo apt install -y python-minimal)"
+  tags: install_dependencies
+
+- name: Install bridge
+  hosts: all
+  roles: 
+    - { role: dependencies, tags: install_dependencies, become: true }
+    - { role: repo, tags: clone_repo }
+    - { role: config, tags: set_config }
+    - { role: logging, when: "syslog_server_port is not undefined", tags: set_logging }
+    - { role: jumpbox, tags: launch_jumpbox, become: true }
+    - { role: blocks, tags: set_blocks, become: true }
+    - { role: workers, tags: launch_workers, become: true }

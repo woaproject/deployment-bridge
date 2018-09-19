@@ -1,0 +1,10 @@
+- name: Start workers
+  shell: "docker-compose run --detach bridge npm run {{ item }}" 
+  args:
+    chdir: "{{ bridge_path }}"
+  with_items:
+    - watcher:signature-request
+    - watcher:collected-signatures
+    - watcher:affirmation-request
+    - sender:home
+    - sender:foreign

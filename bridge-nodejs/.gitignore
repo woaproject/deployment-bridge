@@ -1,0 +1,3 @@
+hosts.yml
+hosts
+group_vars/*.yml

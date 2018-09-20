@@ -1,0 +1,34 @@
+---
+- name: "Install docker-compose@{{ bridge_folder }}.service"
+  copy:
+    dest: "/lib/systemd/system/docker-compose@{{ bridge_folder }}.service"
+    content: |
+      [Unit]
+      Description= {{ bridge_folder }} service with docker compose
+      Requires=docker.service
+      After=docker.service
+
+      [Service]
+      Restart=always
+
+      WorkingDirectory={{ bridge_path }}
+
+      # Remove old containers, images and volumes
+      ExecStartPre=/usr/local/bin/docker-compose down -v
+      ExecStartPre=/usr/local/bin/docker-compose rm -fv
+      ExecStartPre=-/bin/bash -c 'docker ps -aqf "name={{ bridge_folder }}*" | xargs docker rm'
+
+      # Compose up
+      ExecStart=/usr/local/bin/docker-compose up
+
+      # Compose down, remove containers and volumes
+      ExecStop=/usr/local/bin/docker-compose down -v
+
+      [Install]
+      WantedBy=multi-user.target
+
+- name: "Enable docker-compose@{{ bridge_folder }}.service"
+  systemd:
+    name: "docker-compose@{{ bridge_folder }}.service"
+    daemon_reload: yes
+    enabled: yes

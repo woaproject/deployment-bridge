@@ -50,4 +50,4 @@ Useful variables:
 
 `bridge_repo` - path to bridge repo.
 
-`docker_compose_version` - specify a version of docker-compose to be installed
+`docker_compose_version` - specify a version of docker-compose to be installed.

@@ -16,4 +16,4 @@
     - { role: logging, when: "syslog_server_port is not undefined", tags: set_logging }
     - { role: jumpbox, tags: launch_jumpbox, become: true }
     - { role: blocks, tags: set_blocks, become: true }
-    - { role: workers, tags: launch_workers, become: true }
+    - { role: servinstall, tags: install_service, become: true }

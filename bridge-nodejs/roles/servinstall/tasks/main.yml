@@ -1,33 +1,32 @@
 ---
-- name: "Install docker-compose@{{ bridge_folder }}.service"
+- name: "Install docker-compose@bridge.service"
   copy:
-    dest: "/lib/systemd/system/docker-compose@{{ bridge_folder }}.service"
+    dest: "/lib/systemd/system/docker-compose@bridge.service"
     content: |
       [Unit]
-      Description= {{ bridge_folder }} service with docker compose
+      Description= bridge service with docker compose
       Requires=docker.service
       After=docker.service
 
       [Service]
       Restart=always
-      RestartSec=30
+      RestartSec=50
 
       WorkingDirectory={{ bridge_path }}
 
       # Remove old containers, images and volumes
       ExecStartPre=/usr/local/bin/docker-compose down -v
       ExecStartPre=/usr/local/bin/docker-compose rm -fv
-      ExecStartPre=-/bin/bash -c 'docker ps -aqf "name={{ bridge_folder }}*" | xargs docker rm'
 
       # Compose up
       ExecStart=/usr/local/bin/docker-compose up
 
       # Run services
-      ExecStartPost=-/bin/bash -c '/usr/local/bin/docker-compose run --detach npm run watcher:signature-request'
-      ExecStartPost=-/bin/bash -c '/usr/local/bin/docker-compose run --detach npm run watcher:collected-signatures'
-      ExecStartPost=-/bin/bash -c '/usr/local/bin/docker-compose run --detach npm run watcher:affirmation-request'
-      ExecStartPost=-/bin/bash -c '/usr/local/bin/docker-compose run --detach npm run sender:home'
-      ExecStartPost=-/bin/bash -c '/usr/local/bin/docker-compose run --detach npm run sender:foreign'
+      ExecStartPost=-/bin/bash -c '/usr/local/bin/docker-compose run --detach bridge npm run watcher:signature-request'
+      ExecStartPost=-/bin/bash -c '/usr/local/bin/docker-compose run --detach bridge npm run watcher:collected-signatures'
+      ExecStartPost=-/bin/bash -c '/usr/local/bin/docker-compose run --detach bridge npm run watcher:affirmation-request'
+      ExecStartPost=-/bin/bash -c '/usr/local/bin/docker-compose run --detach bridge npm run sender:home'
+      ExecStartPost=-/bin/bash -c '/usr/local/bin/docker-compose run --detach bridge npm run sender:foreign'
 
       # Compose down, remove containers and volumes
       ExecStop=/usr/local/bin/docker-compose down -v
@@ -35,13 +34,13 @@
       [Install]
       WantedBy=multi-user.target
 
-- name: "Enable docker-compose@{{ bridge_folder }}.service"
+- name: "Enable docker-compose@bridge.service"
   systemd:
-    name: "docker-compose@{{ bridge_folder }}.service"
+    name: "docker-compose@bridge.service"
     daemon_reload: yes
     enabled: yes
 
-- name: "Start docker-compose@{{ bridge_folder }}.service"
+- name: "Start docker-compose@bridge.service"
   systemd:
     state: started
-    name: "docker-compose@{{ bridge_folder }}.service"
+    name: "docker-compose@bridge.service"

@@ -1,0 +1,4 @@
+---
+# defaults file for servinstall---
+bridge_path: /home/ubuntu/bridge-nodejs
+bridge_folder: "{{ bridge_path.split('/')[-1] }}"

@@ -1,0 +1,86 @@
+#! /bin/bash
+
+### BEGIN INIT INFO
+# Provides:          scriptname
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start daemon at boot time
+# Description:       Enable service provided by daemon.
+### END INIT INFO
+
+WORKDIR="{{ bridge_path }}"
+
+runbridge(){
+    sudo /usr/local/bin/docker-compose run --detach bridge npm run watcher:signature-request
+    sudo /usr/local/bin/docker-compose run --detach bridge npm run watcher:collected-signatures
+    sudo /usr/local/bin/docker-compose run --detach bridge npm run watcher:affirmation-request
+    sudo /usr/local/bin/docker-compose run --detach bridge npm run sender:home
+    sudo /usr/local/bin/docker-compose run --detach bridge npm run sender:foreign
+}
+
+start(){
+    echo "Starting bridge.."
+    cd $WORKDIR
+    sudo /usr/local/bin/docker-compose down -v
+    sudo /usr/local/bin/docker-compose rm -fv
+    sudo /usr/local/bin/docker-compose up --detach
+    runbridge
+}
+
+stop(){
+    echo "Stopping bridge.."
+    cd $WORKDIR
+    sudo /usr/local/bin/docker-compose down -v 
+    sleep 2
+}
+
+status(){
+    echo "Bridge status:"
+    cd $WORKDIR
+    sudo /usr/local/bin/docker-compose ps 
+}
+
+rebuild(){
+    echo "Rebuild bridge.."
+    cd $WORKDIR
+    sudo /usr/local/bin/docker-compose down -v
+    sudo /usr/local/bin/docker-compose rm -fv
+    sudo /usr/local/bin/docker-compose up --detach --force-recreate --no-deps --build
+    runbridge
+}
+
+
+case "$1" in
+
+  start)
+      start
+    ;;
+
+  stop)
+      stop
+    ;;
+
+  status)
+      status
+    ;;
+
+  restart)
+    echo "Restarting bridge.."
+    stop
+    start
+    ;;
+
+  rebuild)
+    rebuild
+    ;;
+
+  *)
+    echo $"Usage: $0 {start|stop|restart|rebuild|status}"
+    exit 1
+    ;;
+
+esac
+
+exit 0

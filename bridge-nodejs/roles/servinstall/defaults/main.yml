@@ -1,3 +1,3 @@
 ---
-# defaults file for sd
-bridge_path: ./bridge
+# defaults
+bridge_path: "/home/{{ ansible_user }}/bridge"

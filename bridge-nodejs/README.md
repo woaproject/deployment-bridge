@@ -46,7 +46,7 @@ Useful arguments:
 
 Useful variables:
 
-`bridge_path` - absolute or relative (to user home folder) path where bridge will be installed.
+`bridge_path` - absolute path where bridge will be installed. Defaults to /home/<ansible_user>/bridge.
 
 `bridge_repo` - path to bridge repo.
 

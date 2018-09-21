@@ -1,4 +1,4 @@
-bridge_path: ./bridge
+bridge_path: "/home/{{ ansible_user }}/bridge"
 
 allow_http: no
 queue_url: amqp://127.0.0.1

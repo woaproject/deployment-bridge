@@ -10,9 +10,10 @@
 # Description:       Enable service provided by daemon.
 ### END INIT INFO
 
-WORKDIR="{{ bridge_path }}"
+WORKDIR="{{ '/home/ubuntu/'+bridge_path if bridge_path[:1] != "/" else bridge_path }}"
 
 runbridge(){
+    cd $WORKDIR
     sudo /usr/local/bin/docker-compose run --detach bridge npm run watcher:signature-request
     sudo /usr/local/bin/docker-compose run --detach bridge npm run watcher:collected-signatures
     sudo /usr/local/bin/docker-compose run --detach bridge npm run watcher:affirmation-request

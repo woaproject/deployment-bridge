@@ -1,2 +1,2 @@
-bridge_path: ./bridge
+bridge_path: "/home/{{ ansible_user }}/bridge"
 syslog_server_port: udp://127.0.0.1:514

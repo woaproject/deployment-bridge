@@ -51,3 +51,10 @@ Useful variables:
 `bridge_repo` - path to bridge repo.
 
 `docker_compose_version` - specify a version of docker-compose to be installed.
+
+# Working with the Bridge service
+
+Bridge will be installed as a service with the following name: `poabridge`. You can use default `SysVinit` commands to `start`, `stop`, `restart`,`rebuild` service and to check `status` of the service also. Use command in the following format:
+```bash
+service [start|stop|restart|status|rebuild] poabridge
+```

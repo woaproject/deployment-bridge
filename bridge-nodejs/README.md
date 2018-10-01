@@ -31,7 +31,7 @@ You can check `hosts.yml.example` as example. `hosts.yml` can contain multiple h
 Once all configuration files and [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) is installed playbooks can be executed:
 
 ```yaml
-ansible-playbook site.yml
+ansible-playbook -i <file> site.yml
 ```
 
 Useful arguments:
@@ -56,5 +56,10 @@ Useful variables:
 
 Bridge will be installed as a service with the following name: `poabridge`. You can use default `SysVinit` commands to `start`, `stop`, `restart`,`rebuild` service and to check `status` of the service also. Use command in the following format:
 ```bash
-service [start|stop|restart|status|rebuild] poabridge
+sudo service poabridge [start|stop|restart|status|rebuild]
 ```
+
+# Obtaining logs
+
+If `syslog_server_port` option is not set all logs will be stored in containers and can be accessed via default `docker-compose logs` command. To obtain logs `cd` to the directory, where bridge is installed (`~/bridge` by default) and execute `docker-compose logs` command.
+If `syslog_server_port` were set logs will not be accessible via way described above and should be obtained from specified server.

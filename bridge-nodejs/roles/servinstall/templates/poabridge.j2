@@ -10,7 +10,7 @@
 # Description:       Enable service provided by daemon.
 ### END INIT INFO
 
-WORKDIR="{{ '/home/ubuntu/'+bridge_path if bridge_path[:1] != "/" else bridge_path }}"
+WORKDIR="{{ '/home/' + ansible_user | default('ubuntu') + '/' + bridge_path if bridge_path[:1] != "/" else bridge_path }}"
 
 runbridge(){
     cd $WORKDIR

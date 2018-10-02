@@ -1,0 +1,1 @@
+bridge_path: "/home/{{ ansible_user }}/bridge"

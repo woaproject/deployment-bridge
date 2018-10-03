@@ -1,6 +1,6 @@
 bridge_path: "/home/{{ ansible_user }}/bridge"
 
-allow_http: no
-queue_url: amqp://127.0.0.1
-redis_url: redis://127.0.0.1:6379
-redis_lock_ttl: 1000
+ALLOW_HTTP: no
+QUEUE_URL: amqp://127.0.0.1
+REDIS_URL: redis://127.0.0.1:6379
+REDIS_LOCK_TTL: 1000

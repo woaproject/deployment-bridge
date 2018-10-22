@@ -1,3 +1,5 @@
 ---
 # defaults
-bridge_path: "/home/{{ ansible_user }}/bridge"
+#bridge_path: "/home/{{ ansible_user }}/bridge"
+bridge_path: "/home/{{ compose_service_user }}/bridge"
+keyfile_path: "/root/.key"

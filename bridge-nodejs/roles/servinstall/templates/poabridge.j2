@@ -1,7 +1,7 @@
 #! /bin/bash
 
 ### BEGIN INIT INFO
-# Provides:          scriptname
+# Provides:          poabridge
 # Required-Start:    $remote_fs $syslog
 # Required-Stop:     $remote_fs $syslog
 # Default-Start:     2 3 4 5
@@ -10,45 +10,63 @@
 # Description:       Enable service provided by daemon.
 ### END INIT INFO
 
-WORKDIR="{{ '/home/' + ansible_user | default('ubuntu') + '/' + bridge_path if bridge_path[:1] != "/" else bridge_path }}"
+WORKDIR="{{ '/home/' + compose_service_user | default('poadocker') + '/' + bridge_path if bridge_path[:1] != "/" else bridge_path }}"
+
+#Getting path to private key file and variable name for parsing key file
+keyfile="{{ keyfile_path }}"
+vaddr="VALIDATOR_ADDRESS="
+vkey="VALIDATOR_ADDRESS_PRIVATE_KEY="
+
+#Parsing file content and add key to variable
+while read -r line
+do
+    case $line in
+        $vaddr*)
+            vaddr=${line#$vaddr}
+            ;;
+        $vkey*)
+            vkey=${line#$vkey}
+            ;;
+    esac
+done < $keyfile
 
 runbridge(){
     cd $WORKDIR
-    sudo /usr/local/bin/docker-compose run --detach bridge npm run watcher:signature-request
-    sudo /usr/local/bin/docker-compose run --detach bridge npm run watcher:collected-signatures
-    sudo /usr/local/bin/docker-compose run --detach bridge npm run watcher:affirmation-request
-    sudo /usr/local/bin/docker-compose run --detach bridge npm run sender:home
-    sudo /usr/local/bin/docker-compose run --detach bridge npm run sender:foreign
+    sudo -u "{{ compose_service_user }}" /usr/local/bin/docker-compose run -e VALIDATOR_ADDRESS=$vaddr -e VALIDATOR_ADDRESS_PRIVATE_KEY=$vkey --detach bridge npm run watcher:signature-request
+    sudo -u "{{ compose_service_user }}" /usr/local/bin/docker-compose run --detach bridge npm run watcher:collected-signatures
+    sudo -u "{{ compose_service_user }}" /usr/local/bin/docker-compose run --detach bridge npm run watcher:affirmation-request
+    sudo -u "{{ compose_service_user }}" /usr/local/bin/docker-compose run --detach bridge npm run sender:home
+    sudo -u "{{ compose_service_user }}" /usr/local/bin/docker-compose run --detach bridge npm run sender:foreign
 }
 
 start(){
     echo "Starting bridge.."
     cd $WORKDIR
-    sudo /usr/local/bin/docker-compose down -v
-    sudo /usr/local/bin/docker-compose rm -fv
-    sudo /usr/local/bin/docker-compose up --detach
+    sudo -u "{{ compose_service_user }}" /usr/local/bin/docker-compose down -v
+    sudo -u "{{ compose_service_user }}" /usr/local/bin/docker-compose rm -fv
+    sudo -u "{{ compose_service_user }}" /usr/local/bin/docker-compose up --detach
     runbridge
 }
 
 stop(){
     echo "Stopping bridge.."
     cd $WORKDIR
-    sudo /usr/local/bin/docker-compose down -v 
+    sudo -u "{{ compose_service_user }}" /usr/local/bin/docker-compose down -v 
     sleep 2
 }
 
 status(){
     echo "Bridge status:"
     cd $WORKDIR
-    sudo /usr/local/bin/docker-compose ps 
+    sudo -u "{{ compose_service_user }}" /usr/local/bin/docker-compose ps 
 }
 
 rebuild(){
     echo "Rebuild bridge.."
     cd $WORKDIR
-    sudo /usr/local/bin/docker-compose down -v
-    sudo /usr/local/bin/docker-compose rm -fv
-    sudo /usr/local/bin/docker-compose up --detach --force-recreate --no-deps --build
+    sudo -u "{{ compose_service_user }}" /usr/local/bin/docker-compose down -v
+    sudo -u "{{ compose_service_user }}" /usr/local/bin/docker-compose rm -fv
+    sudo -u "{{ compose_service_user }}" /usr/local/bin/docker-compose up --detach --force-recreate --no-deps --build
     runbridge
 }
 

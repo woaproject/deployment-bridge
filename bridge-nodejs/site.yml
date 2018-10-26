@@ -11,9 +11,9 @@
   hosts: all
   roles: 
     - { role: dependencies, tags: install_dependencies, become: true }
-    - { role: repo, tags: clone_repo }
-    - { role: config, tags: set_config }
-    - { role: logging, when: "syslog_server_port is not undefined", tags: set_logging }
+    - { role: repo, tags: clone_repo, become: true }
+    - { role: config, tags: set_config, become: true }
+    - { role: logging, when: "syslog_server_port is not undefined", tags: set_logging, become: true}
     - { role: jumpbox, tags: launch_jumpbox, become: true }
     - { role: blocks, tags: set_blocks, become: true }
     - { role: servinstall, tags: install_service, become: true }

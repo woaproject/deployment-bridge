@@ -17,7 +17,6 @@ Playbooks has two points of configuration - file `hosts.yml` and `group_vars/<br
     hosts:
         <host_ip>:
             ansible_user: "<user>"
-            VALIDATOR_ADDRESS: "<hex address>" 
             VALIDATOR_ADDRESS_PRIVATE_KEY: "<private_key>"
             #syslog_server_port: "<protocol>://<ip>:<port>" # When this parameter is set all bridge logs will be redirected to <ip>:<port> address.
 ```

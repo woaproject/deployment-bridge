@@ -1,4 +1,4 @@
-This role install required dependencies:
+This role installs required dependencies:
 
 * apt-transport-https
 

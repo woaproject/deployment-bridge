@@ -28,7 +28,7 @@ This file contains parameters specific to your node, so you need to edit it and 
 * `signer_password` - set this to authority's password
 * `syslog_server_port` - set this to `server:port` of syslog server (should be provided to you)
 
-If you're a new validator joining an existing bridge setup, you may want to additionally set the following parametrs in `hosts.yml`:
+If you're a new validator joining an existing bridge setup, you may want to additionally set the following parameters in `hosts.yml`:
 * `last_checked_deposit_relay`
 * `last_checked_withdraw_relay`
 * `last_checked_withdraw_confirm`

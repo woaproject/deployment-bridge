@@ -13,14 +13,6 @@
       HOME_START_BLOCK={{ (BLOCKS.stdout | from_json).homeStartBlock }}
       FOREIGN_START_BLOCK={{ (BLOCKS.stdout | from_json).foreignStartBlock }}
 
-- name: Discarding unwanted messages in rsyslog
-  blockinfile:
-    path: /etc/rsyslog.conf
-    insertbefore: "# Where to place spool and state files"
-    marker: "#{mark} add string to discarding unwandet messages"
-    content: ':msg, contains, "VALIDATOR_ADDRESS_PRIVATE_KEY" ~'
-  notify: restart rsyslog
-
 - name: Get validator address
   become_user: "{{ compose_service_user }}" 
   shell: docker-compose run -e VALIDATOR_ADDRESS_PRIVATE_KEY="{{ VALIDATOR_ADDRESS_PRIVATE_KEY }}" bridge node scripts/privateKeyToAddress.js
@@ -34,7 +26,7 @@
 
 - name: Install .key config
   template:
-    src: .key.j2
+    src: key.j2
     dest: "/root/.key"
     owner: root
     group: root

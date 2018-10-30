@@ -44,3 +44,64 @@
     group: docker
     createhome: yes
 
+- name: Set the local container logs configuration file
+  template:
+    src: 30-docker.conf.j2
+    dest: /etc/rsyslog.d/30-docker.conf
+    owner: root
+    group: root
+    mode: 644
+
+- name: Set the log configuration file to send container logs to remote server
+  template:
+    src: 35-remote-logging.conf.j2
+    dest: /etc/rsyslog.d/35-remote-logging.conf
+    owner: root
+    group: root
+    mode: 644
+
+- name: Set the logrotate config file
+  template:
+    src: docker-logs.j2
+    dest: /etc/logrotate.d/docker-logs
+    owner: root
+    group: root
+    mode: 644
+
+- name: Discarding unwanted messages in rsyslog
+  blockinfile:
+    path: /etc/rsyslog.conf
+    insertbefore: "# Where to place spool and state files"
+    marker: "#{mark} add string to discarding unwanted messages"
+    content: ':msg, contains, "VALIDATOR_ADDRESS_PRIVATE_KEY" ~'
+  notify: restart rsyslog
+
+
+- name: Install auditd
+  apt:
+    name: auditd
+    update_cache: yes
+
+- name: Configure auditd
+  blockinfile:
+    path: /etc/audit/audit.rules
+    block: | 
+     -w /usr/bin/docker -p wa
+     -w /var/lib/docker -p wa
+     -w /etc/docker -p wa
+     -w /lib/systemd/system/docker.service -p wa
+     -w /lib/systemd/system/docker.socket -p wa
+     -w /etc/default/docker -p wa
+     -w /etc/docker/daemon.json -p wa
+     -w /usr/bin/docker-containerd -p wa
+     -w /usr/bin/docker-runc -p wa 
+  notify: restart auditd
+
+- name: Configure docker engine
+  copy:
+    src: daemon.json
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: 0640
+  notify: restart docker

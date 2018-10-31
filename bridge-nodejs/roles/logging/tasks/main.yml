@@ -14,5 +14,5 @@
    
 - name: Write new docker-compose file
   copy:
-    content: "{{ docker_compose_parsed | to_yaml }}"
+    content: "{{ docker_compose_parsed | to_nice_yaml }}"
     dest: "{{ bridge_path }}/docker-compose.yml"

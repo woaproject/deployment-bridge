@@ -2,3 +2,9 @@
   template:
     src: .env.j2
     dest: "{{ bridge_path }}/.env"
+
+- name: Create compose file for poabridge service
+  copy:
+    src: bridge-compose.yml
+    dest: "{{ bridge_path }}/bridge-compose.yml"
+    owner: poadocker

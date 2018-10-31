@@ -33,30 +33,30 @@ done < $keyfile
 start(){
     echo "Starting bridge.."
     cd $WORKDIR
-    sudo -u "{{ compose_service_user }}" VALIDATOR_ADDRESS=$vaddr VALIDATOR_ADDRESS_PRIVATE_KEY=$vkey /usr/local/bin/docker-compose down -v
-    sudo -u "{{ compose_service_user }}" VALIDATOR_ADDRESS=$vaddr VALIDATOR_ADDRESS_PRIVATE_KEY=$vkey /usr/local/bin/docker-compose rm -fv
-    sudo -u "{{ compose_service_user }}" VALIDATOR_ADDRESS=$vaddr VALIDATOR_ADDRESS_PRIVATE_KEY=$vkey /usr/local/bin/docker-compose up  --detach
+    sudo -u "{{ compose_service_user }}" VALIDATOR_ADDRESS=$vaddr VALIDATOR_ADDRESS_PRIVATE_KEY=$vkey /usr/local/bin/docker-compose -f bridge-compose.yml down -v
+    sudo -u "{{ compose_service_user }}" VALIDATOR_ADDRESS=$vaddr VALIDATOR_ADDRESS_PRIVATE_KEY=$vkey /usr/local/bin/docker-compose -f bridge-compose.yml rm -fv
+    sudo -u "{{ compose_service_user }}" VALIDATOR_ADDRESS=$vaddr VALIDATOR_ADDRESS_PRIVATE_KEY=$vkey /usr/local/bin/docker-compose -f bridge-compose.yml up  --detach
 }
 
 stop(){
     echo "Stopping bridge.."
     cd $WORKDIR
-    sudo -u "{{ compose_service_user }}" VALIDATOR_ADDRESS=$vaddr VALIDATOR_ADDRESS_PRIVATE_KEY=$vkey /usr/local/bin/docker-compose  down -v
+    sudo -u "{{ compose_service_user }}" VALIDATOR_ADDRESS=$vaddr VALIDATOR_ADDRESS_PRIVATE_KEY=$vkey /usr/local/bin/docker-compose -f bridge-compose.yml down -v
     sleep 2
 }
 
 status(){
     echo "Bridge status:"
     cd $WORKDIR
-    sudo -u "{{ compose_service_user }}" VALIDATOR_ADDRESS=$vaddr VALIDATOR_ADDRESS_PRIVATE_KEY=$vkey /usr/local/bin/docker-compose  ps
+    sudo -u "{{ compose_service_user }}" VALIDATOR_ADDRESS=$vaddr VALIDATOR_ADDRESS_PRIVATE_KEY=$vkey /usr/local/bin/docker-compose -f bridge-compose.yml ps
 }
 
 rebuild(){
     echo "Rebuild bridge.."
     cd $WORKDIR
-    sudo -u "{{ compose_service_user }}" VALIDATOR_ADDRESS=$vaddr VALIDATOR_ADDRESS_PRIVATE_KEY=$vkey /usr/local/bin/docker-compose   down -v
-    sudo -u "{{ compose_service_user }}" VALIDATOR_ADDRESS=$vaddr VALIDATOR_ADDRESS_PRIVATE_KEY=$vkey /usr/local/bin/docker-compose   rm -fv
-    sudo -u "{{ compose_service_user }}" VALIDATOR_ADDRESS=$vaddr VALIDATOR_ADDRESS_PRIVATE_KEY=$vkey /usr/local/bin/docker-compose up  --detach --force-recreate --no-deps --build
+    sudo -u "{{ compose_service_user }}" VALIDATOR_ADDRESS=$vaddr VALIDATOR_ADDRESS_PRIVATE_KEY=$vkey /usr/local/bin/docker-compose -f bridge-compose.yml down -v
+    sudo -u "{{ compose_service_user }}" VALIDATOR_ADDRESS=$vaddr VALIDATOR_ADDRESS_PRIVATE_KEY=$vkey /usr/local/bin/docker-compose -f bridge-compose.yml rm -fv
+    sudo -u "{{ compose_service_user }}" VALIDATOR_ADDRESS=$vaddr VALIDATOR_ADDRESS_PRIVATE_KEY=$vkey /usr/local/bin/docker-compose -f bridge-compose.yml up  --detach --force-recreate --no-deps --build
 }
 
 

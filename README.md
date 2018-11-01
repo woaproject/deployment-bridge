@@ -5,7 +5,7 @@
 The POA Bridge allows users to transfer assets between two chains in the Ethereum ecosystem. It is composed of several elements which are located in different POA Network repositories:
 
 **Bridge Elements**
-1. Deployment Playbooks. Configuration management instructions contained in this repository.
+1. Deployment Playbooks. Configuration management instructions for validator nodes contained in this repository.
 2. [Bridge Smart Contracts](https://github.com/poanetwork/poa-bridge-contracts). Solidity contracts used to manage bridge validators, collect signatures, and confirm asset relay and disposal.
 3. [Token Bridge](https://github.com/poanetwork/token-bridge). The token bridge oracle written in NodeJS.
 4. [Bridge UI Application](https://github.com/poanetwork/bridge-ui). A DApp interface to transfer tokens and coins between chains.
@@ -14,16 +14,16 @@ The POA Bridge allows users to transfer assets between two chains in the Ethereu
 
 ## Playbooks Overview
 
-These playbooks are designed to automate the deployment process for cross-chain bridges. This process installs the bridge as a service and sets .env configurations on an Ubuntu server. Playbooks for the current token-bridge deployment are located in the [bridge-nodejs](bridge-nodejs) folder.
+These playbooks are designed to automate the deployment process for cross-chain bridges on bridge validator nodes. This process installs the bridge as a service and sets .env configurations on a remote server. Playbooks for the current token-bridge deployment are located in the [bridge-nodejs](bridge-nodejs) folder.
 
 
 ### Rust Bridge Playbooks
 
-The Rust bridge is not currently in production, but ansible playbooks were developed for this implementation. They are available in the [upgradable-wo-parity](upgradable-wo-parity)folder. 
+The Rust bridge is not currently in production, but an Ansible playbook is developed for this implementation. It is available in the [upgradable-wo-parity](upgradable-wo-parity)folder. 
 
 ## Dependencies
 
-Playbooks automatically install `Docker`, `docker-compose`, `Python`, `Git`and it dependencies (such as `curl`, `ca-certificates`, `apt-transport-https`, etc.). Install [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) to launch playbooks.
+The playbooks automatically install `Docker`, `docker-compose`, `Python`, `Git`and it dependencies (such as `curl`, `ca-certificates`, `apt-transport-https`, etc.). Install [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) to launch playbooks.
 
 ## Configuration
 
@@ -36,16 +36,6 @@ The Bridge service is named `poabridge`. Use the default `SysVinit` commands to 
 Commands format:
 ```bash
 sudo service poabridge [start|stop|restart|status|rebuild]
-```
-
-## Logs
-
-If the `syslog_server_port` option in the hosts.yml file was not set, all logs will be stored in containers and can be accessed via the default `docker-compose logs` command. To obtain logs, `cd` to the directory where the bridge is installed (`~/bridge` by default) and execute the `docker-compose logs` command.
-
-If the `syslog_server_port` was set, logs can be obtained from the specified server.
-
-```yaml 
-syslog_server_port: "<protocol>://<ip>:<port>" # When this parameter is set all bridge logs will be redirected to <ip>:<port> address.
 ```
 
 ## License

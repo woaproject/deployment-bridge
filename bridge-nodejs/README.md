@@ -1,7 +1,10 @@
 ### Prerequisites
-1. Launch an Ubuntu 16.04 server on your favorite hosting provider and note its IP address. You should setup ssh access to your node via public+private keys (using passwords is less secure). When creating the node, set a meaningful `hostname` that can identify you (e.g. `validator-0x...`).
+1. A functional Ubuntu 16.04 server launched using a trusted hosting provider.
+   * Record the IP address (required for file setup).
+   * Setup ssh access to your node via public+private keys (using passwords is less secure). 
+   * When creating the node, set a meaningful `hostname` that can identify you (e.g. `validator-0x...`).
 
-2. On your local machine install
+2. On your local machine install:
     * Python 2 (v2.6-v2.7)/Python3 (v3.5+)
     * Ansible v2.3+
     * Git
@@ -24,28 +27,40 @@ cp hosts.yml.template hosts.yml
 <bridge_name>:
     hosts:
         <host_ip>:
-            ansible_user: "<user>"
+            ansible_user: <user>
             VALIDATOR_ADDRESS: "<hex address>" 
             VALIDATOR_ADDRESS_PRIVATE_KEY: "<private_key>"
             #syslog_server_port: "<protocol>://<ip>:<port>" # When this parameter is set all bridge logs will be redirected to <ip>:<port> address.
 ```
 
+| Value | Description |
+|------------------------------------------------|:----------------------------------------------------------------------------------------------------------:|
+| <bridge_name> | The bridge name which tells Ansible which file to use. This is located in `group_vars/<bridge_name>.yml`. |
+| <host_ip> | Remote server IP address. |
+| ansible_user: <user> | User that will ssh into the node. This is typically `ubuntu` or `root`. |
+| VALIDATOR_ADDRESS: "<hex address>" | The validator's address, beginning with the `0x` prefix. |
+| VALIDATOR_ADDRESS_PRIVATE_KEY: "<private_key>" | The private key for the specified address. |
+| syslog_server_port: "<protocol>://<ip>:<port>" | Optional port specification for bridge logs. This value will be provided by an administrator if required.  |
+
+
 `hosts.yml` can contain multiple hosts and bridge configurations (groups) at once.
 
 
-3. Create a file for the public bridge parameters. 
+3. Copy the bridge name(s) to the hosts.yml file. 
    1. Go to the group_vars folder. 
    `cd group_vars`
-   2. Copy the example file and rename with your <bridge_name>. For example, if the bridge name in hosts.yml is sokol-kovan, you would name the file sokol-kovan.yml
-   `cp example.yml <bridge_name>.yml` 
+   2. Note the  <bridge_name> and add it to the hosts.yml configuration. For example, if a bridge file is named sokol-kovan.yml, you would change the <bridge_name> value in hosts.yml to sokol-kovan.
 
+`group_vars/<bridge_name>.yml` contains the public bridge parameters. This file will be prepared by administrators for each bridge. The validator only needs to add the required bridge name in the hosts.yml file to tell Ansible which file to use.
 
-`group_vars/<bridge_name>.yml` contains the public bridge parameters. `group_vars/example.yml` shows an example configuration for the POA/Sokol - POA/Sokol bridge. Parameter values should match values from the .env file for the token-bridge. See https://github.com/poanetwork/token-bridge#configuration-parameters for details.
+ `group_vars/example.yml` shows an example configuration for the POA/Sokol - POA/Sokol bridge. Parameter values should match values from the .env file for the token-bridge. See https://github.com/poanetwork/token-bridge#configuration-parameters for details.
 
 
 ## Execution
 
-Playbooks can be executed once [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) is installed and all configuration variables are complete. 
+The playbook can be executed once [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) is installed and all configuration variables are complete. 
+
+It will automatically install `Docker`, `docker-compose`, `Python`, `Git` and it dependencies (such as `curl`, `ca-certificates`, `apt-transport-https`, etc.) to the node. 
 
 ```yaml
 ansible-playbook -i hosts.yml site.yml
@@ -53,7 +68,7 @@ ansible-playbook -i hosts.yml site.yml
 
 **Useful arguments:**
 
-Used with ansible-playbook command, for example:
+To be used with the ansible-playbook command, for example:
 
 ```yaml
  `ansible-playbook -i hosts.yml site.yml --ask-become-pass`
@@ -70,6 +85,8 @@ Used with ansible-playbook command, for example:
 * `--private-key=<file_name>` - if private keyfile is required to connect to the ubuntu instance.
 
 **Useful variables:**
+
+These variables can be added to hosts.yml to override defaults.
 
 * `bridge_path` - absolute path where bridge will be installed. Defaults to /home/<ansible_user>/bridge.
 
@@ -89,7 +106,9 @@ sudo service poabridge [start|stop|restart|status|rebuild]
 
 ## Logs
 
-If the `syslog_server_port` option in the hosts.yml file was not set, all logs will be stored in containers and can be accessed via the default `docker-compose logs` command. To obtain logs, `cd` to the directory where the bridge is installed (`~/bridge` by default) and execute the `docker-compose logs` command.
+If the `syslog_server_port` option in the hosts.yml file was not set, all logs will be stored in containers and can be accessed via the default `docker-compose logs` command (use `sudo` if necessary. 
+
+To obtain logs, `cd` to the directory where the bridge is installed (`~/bridge` by default) and execute the `sudo docker-compose logs` command.
 
 If the `syslog_server_port` was set, logs can be obtained from the specified server.
 

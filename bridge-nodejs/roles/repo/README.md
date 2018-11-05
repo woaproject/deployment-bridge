@@ -1,1 +1,1 @@
-This role clones repo from specified URL. 
+This role clones the repo from a specified URL. 

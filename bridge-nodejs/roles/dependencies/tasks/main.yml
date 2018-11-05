@@ -36,3 +36,11 @@
   with_items:
     - docker
     - docker-compose
+
+- name: Add user to run docker-compose
+  user:
+    name: "{{ compose_service_user }}"
+    comment: user to run docker-compose
+    group: docker
+    createhome: yes
+

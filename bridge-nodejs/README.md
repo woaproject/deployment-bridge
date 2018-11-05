@@ -33,12 +33,12 @@ cp hosts.yml.template hosts.yml
 ```
 
 | Value | Description |
-|------------------------------------------------|:----------------------------------------------------------------------------------------------------------:|
-| <bridge_name> | The bridge name which tells Ansible which file to use. This is located in `group_vars/<bridge_name>.yml`. |
-| <host_ip> | Remote server IP address. |
-| ansible_user: <user> | User that will ssh into the node. This is typically `ubuntu` or `root`. |
-| VALIDATOR_ADDRESS_PRIVATE_KEY: "<private_key>" | The private key for the specified validator address. |
-| syslog_server_port: "<protocol>://<ip>:<port>" | Optional port specification for bridge logs. This value will be provided by an administrator if required.  |
+|:------------------------------------------------|:----------------------------------------------------------------------------------------------------------|
+| `<bridge_name>` | The bridge name which tells Ansible which file to use. This is located in `group_vars/<bridge_name>.yml`. |
+| `<host_ip>` | Remote server IP address. |
+| ansible_user: `<user>` | User that will ssh into the node. This is typically `ubuntu` or `root`. |
+| VALIDATOR_ADDRESS_PRIVATE_KEY: `"<private_key>"` | The private key for the specified validator address. |
+| syslog_server_port: `"<protocol>://<ip>:<port>"` | Optional port specification for bridge logs. This value will be provided by an administrator if required.  |
 
 
 `hosts.yml` can contain multiple hosts and bridge configurations (groups) at once.
@@ -53,11 +53,11 @@ cp hosts.yml.template hosts.yml
 
 1. The `group_vars/<bridge_name>.yml` file contains the public bridge parameters. This file is prepared by administrators for each bridge. The validator only needs to add the required bridge name in the hosts.yml file to tell Ansible which file to use.
 
-`group_vars/example.yml` shows an example configuration for the POA/Sokol - POA/Sokol bridge. Parameter values should match values from the .env file for the token-bridge. See https://github.com/poanetwork/token-bridge#configuration-parameters for details.
+   `group_vars/example.yml` shows an example configuration for the POA/Sokol - POA/Sokol bridge. Parameter values should match values from the .env file for the token-bridge. See https://github.com/poanetwork/token-bridge#configuration-parameters for details.
 
 2. Set the `versions` parameter in the `roles/repo/tasks/main.yml` file to define a specific branch or commit to use with the [token bridge](https://github.com/poanetwork/token-bridge). If `versions` is not specified, the default (`master`) branch is used.
 
-In this example, the `support-erc20-native-#81` branch is used.
+   In this example, the `support-erc20-native-#81` branch is used.
 
 ```
 - name: Get bridge repo
@@ -125,5 +125,5 @@ To obtain logs, `cd` to the directory where the bridge is installed (`~/bridge` 
 If the `syslog_server_port` was set, logs can be obtained from the specified server.
 
 ```yaml 
-syslog_server_port: "<protocol>://<ip>:<port>" # When this parameter is set all bridge logs will be redirected to <ip>:<port> address.
+syslog_server_port: "<protocol>://<ip>:<port>" # When this parameter is set all bridge logs will be redirected to the <ip>:<port> address.
 ```

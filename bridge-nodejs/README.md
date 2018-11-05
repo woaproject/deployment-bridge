@@ -1,5 +1,5 @@
 ### Prerequisites
-1. A functional Ubuntu 16.04 server launched using a trusted hosting provider.
+1. A functional Ubuntu 16.04 server launched using a trusted hosting provider. For more information, see our tutorials on [setting up a validator node on AWS](https://github.com/poanetwork/wiki/wiki/Validator-Node-on-AWS) or [setting up on non-AWS](https://github.com/poanetwork/wiki/wiki/Validator-Node-Non-AWS).
    * Record the IP address (required for file setup).
    * Setup ssh access to your node via public+private keys (using passwords is less secure). 
    * When creating the node, set a meaningful `hostname` that can identify you (e.g. `validator-0x...`).
@@ -28,7 +28,6 @@ cp hosts.yml.template hosts.yml
     hosts:
         <host_ip>:
             ansible_user: <user>
-            VALIDATOR_ADDRESS: "<hex address>" 
             VALIDATOR_ADDRESS_PRIVATE_KEY: "<private_key>"
             #syslog_server_port: "<protocol>://<ip>:<port>" # When this parameter is set all bridge logs will be redirected to <ip>:<port> address.
 ```
@@ -38,8 +37,7 @@ cp hosts.yml.template hosts.yml
 | <bridge_name> | The bridge name which tells Ansible which file to use. This is located in `group_vars/<bridge_name>.yml`. |
 | <host_ip> | Remote server IP address. |
 | ansible_user: <user> | User that will ssh into the node. This is typically `ubuntu` or `root`. |
-| VALIDATOR_ADDRESS: "<hex address>" | The validator's address, beginning with the `0x` prefix. |
-| VALIDATOR_ADDRESS_PRIVATE_KEY: "<private_key>" | The private key for the specified address. |
+| VALIDATOR_ADDRESS_PRIVATE_KEY: "<private_key>" | The private key for the specified validator address. |
 | syslog_server_port: "<protocol>://<ip>:<port>" | Optional port specification for bridge logs. This value will be provided by an administrator if required.  |
 
 
@@ -51,10 +49,24 @@ cp hosts.yml.template hosts.yml
    `cd group_vars`
    2. Note the  <bridge_name> and add it to the hosts.yml configuration. For example, if a bridge file is named sokol-kovan.yml, you would change the <bridge_name> value in hosts.yml to sokol-kovan.
 
-`group_vars/<bridge_name>.yml` contains the public bridge parameters. This file will be prepared by administrators for each bridge. The validator only needs to add the required bridge name in the hosts.yml file to tell Ansible which file to use.
+#### Administrator Configurations
 
- `group_vars/example.yml` shows an example configuration for the POA/Sokol - POA/Sokol bridge. Parameter values should match values from the .env file for the token-bridge. See https://github.com/poanetwork/token-bridge#configuration-parameters for details.
+1. The `group_vars/<bridge_name>.yml` file contains the public bridge parameters. This file is prepared by administrators for each bridge. The validator only needs to add the required bridge name in the hosts.yml file to tell Ansible which file to use.
 
+`group_vars/example.yml` shows an example configuration for the POA/Sokol - POA/Sokol bridge. Parameter values should match values from the .env file for the token-bridge. See https://github.com/poanetwork/token-bridge#configuration-parameters for details.
+
+2. Set the `versions` parameter in the `roles/repo/tasks/main.yml` file to define a specific branch or commit to use with the [token bridge](https://github.com/poanetwork/token-bridge). If `versions` is not specified, the default (`master`) branch is used.
+
+In this example, the `support-erc20-native-#81` branch is used.
+
+```
+- name: Get bridge repo
+  git:
+    repo: "{{ bridge_repo }}"
+    dest: "{{ bridge_path }}"
+    force: yes
+    version: support-erc20-native-#81
+```
 
 ## Execution
 
@@ -106,7 +118,7 @@ sudo service poabridge [start|stop|restart|status|rebuild]
 
 ## Logs
 
-If the `syslog_server_port` option in the hosts.yml file was not set, all logs will be stored in containers and can be accessed via the default `docker-compose logs` command (use `sudo` if necessary. 
+If the `syslog_server_port` option in the hosts.yml file was not set, all logs will be stored in containers and can be accessed via the default `docker-compose logs` command (use `sudo` if necessary). 
 
 To obtain logs, `cd` to the directory where the bridge is installed (`~/bridge` by default) and execute the `sudo docker-compose logs` command.
 

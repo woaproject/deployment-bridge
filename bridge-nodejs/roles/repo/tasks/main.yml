@@ -3,4 +3,4 @@
     repo: "{{ bridge_repo }}"
     dest: "{{ bridge_path }}"
     force: yes
-    version: support-erc20-native-#81
+    version: develop

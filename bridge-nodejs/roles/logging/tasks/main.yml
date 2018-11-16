@@ -9,10 +9,10 @@
 
 - name: Set logger to remote server
   set_fact:
-    docker_compose_parsed: "{{ docker_compose_parsed |combine({'services': {item: {'logging': {'driver': 'syslog','options': {'syslog-address':syslog_server_port, 'tag': '{{.Name}}/{{.ID}}'}}}}}, recursive=True) }}"
+    docker_compose_parsed: "{{ docker_compose_parsed |combine({'services': {item: {'logging': {'driver': 'syslog','options': {'tag': '{{.Name}}/{{.ID}}'}}}}}, recursive=True) }}"
   with_items: "{{ docker_compose_parsed.services }}"
    
 - name: Write new docker-compose file
   copy:
-    content: "{{ docker_compose_parsed | to_yaml }}"
+    content: "{{ docker_compose_parsed | to_nice_yaml }}"
     dest: "{{ bridge_path }}/docker-compose.yml"
